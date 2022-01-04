@@ -33,7 +33,9 @@ char CaractereValideCifre[20]={'1','2','3','4','5','6','7','8','9','0','+','-','
 char CaractereValideLitere[200]={"abcdefghijklmnopqrstuvwxyz _"};
 int pozitietextx=300,pozitietexty=100;
 
-
+char* transfLitCif(char *s)
+void introdVec(char *s)
+char* evaluator(char vecCuv[5000][10000])
 void conversie (long long int x , BIG_INT& nr);// converteste un int in BIG_INT
 void addlBIG (BIG_INT& nr , int x);// Adauga cifra x la stanga numarului
 void addrBIG (BIG_INT& nr , int x);// Adauga cifra x la dreapta numarului
@@ -1800,7 +1802,6 @@ char* evaluator(char vecCuv[5000][10000]) // Calculeaza ecuatia din vectorul de 
                 strcpy(rez+i,rez+i+1);
     if(!ok)strcpy(rez+i,rez+i+1);
     return rez;
-
 }
 
 
