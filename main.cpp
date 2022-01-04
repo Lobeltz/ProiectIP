@@ -82,9 +82,6 @@ void meniuCifZec();
 
 
  int main(){
-    char c1[]={"abc"},c2[]={"eee"};
-    strcpy(c1+strlen(c1),c2);
-    cout<<c1;
     meniu1();
     closegraph();
 
