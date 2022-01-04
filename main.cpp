@@ -31,6 +31,23 @@ char SirCifreMari[50][20] = { "unu","doi","trei","patru","cinci","sase","sapte",
 char SirOperatori[10] = { '`','+','-' ,'*' ,'/' ,'=' ,'(' ,')' };
 char CaractereValideCifre[20]={'1','2','3','4','5','6','7','8','9','0','+','-','*','x','/',':','(',')',' '};
 char CaractereValideLitere[200]={"abcdefghijklmnopqrstuvwxyz _"};
+char cuvInutile[100][100] = {"Care", "Ce", "Cat","Cum", "este", "sunt", "rezultatul","egal", "cu", "lui", "?", "dintre"},
+                            cuvInm[10][20] = {"inmultire", "inmultirii", "inmultirea", "produs", "produsul", "produsului"},
+                                    cuvAdun[10][20] = {"suma", "sumei", "adunare", "adunarea", "adunarii"},
+                                            cuvScad[10][20] = {"scadere", "scaderii","scaderea", "diferenta", "diferentei"},
+                                                    cuvImp[10][20] = {"impartire", "impartirea"};
+char num[100][100] = {"o", "un", "unu", "doi", "doua", "trei", "patru", "cinci", "sase", "sapte", "opt", "noua", "zece",
+                      "unsprezece", "doisprezece", "treisprezece", "paisprezece",
+                      "cincisprezece", "saisprezece", "saptesprezece", "optsprezece", "nouasprezece", "douazeci",
+                      "treizeci", "patruzeci", "cincizeci", "saizeci", "saptezeci", "optzeci", "nouazeci"
+                     };
+int numCif[100] = {1, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 30, 40, 50, 60, 70,
+                   80, 90
+                  };
+char cuvCheie[100][100] = {"suta", "sute", "mie", "mii", "milion", "milioane"};
+int cuvCheieCif[100] = {100, 100, 1000, 1000, 1000000, 1000000};
+int ok, aFostcuvCheie, k;
+char vecCuv[5000][10000],rez[1000];
 int pozitietextx=300,pozitietexty=100;
 
 char* transfLitCif(char *s)
