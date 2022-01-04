@@ -46,7 +46,7 @@ int numCif[100] = {1, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1
                   };
 char cuvCheie[100][100] = {"suta", "sute", "mie", "mii", "milion", "milioane"};
 int cuvCheieCif[100] = {100, 100, 1000, 1000, 1000000, 1000000};
-int ok, aFostcuvCheie, k;
+int ok, aFostcuvCheie;
 char vecCuv[5000][10000],rez[1000];
 int pozitietextx=300,pozitietexty=100;
 
