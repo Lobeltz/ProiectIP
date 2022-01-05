@@ -383,13 +383,13 @@ void meniuZecim()
 
 void meniu2()
 {
-    setbkcolor(15);
+    setbkcolor(1);
     cleardevice();
     short x,y;
     //readimagefile("fundal.jpg",0,0,1920,1080);
     settextstyle(1,HORIZ_DIR,5);
-    setcolor(0);
-    setbkcolor(15);
+    setcolor(10);
+    setbkcolor(1);
     outtextxy(530,300,"Rezultate cu numere zecimale");
     outtextxy(600,500,"Rezultate cu numere mari");
     readimagefile("back.jpg",900,800,1020,920);
@@ -417,7 +417,7 @@ void meniu2()
 void meniu1()
 {
     initwindow(1920,1080,"CalcRO",true);
-    setbkcolor(15);
+    setbkcolor(1);
     settextstyle(1,HORIZ_DIR,5);
     cleardevice();
     short startJoc=0;
@@ -1533,7 +1533,7 @@ void infixtoprefixREAL (Real vector1[] , Real vector2[] , int& lungime) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
+
 char* transfLitCif(char *s) // Transforma numarul scris in litere in cifre
 {
     int i = 0;
@@ -1821,4 +1821,4 @@ char* evaluator(char vecCuv[5000][10000]) // Calculeaza ecuatia din vectorul de 
 }
 
 
-*/
+
