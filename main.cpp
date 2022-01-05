@@ -221,7 +221,7 @@ void meniuCifBig(){
             evaluare(String);
             settextstyle(1,HORIZ_DIR,2);
             int l=0,ltot=0;
-            char sir_auxiliar[MAX_VEC],sir_complet[MAX_VEC];
+            char sir_auxiliar[MAX_VEC],sir_complet[MAX_VEC],sir_auxiliar2[MAX_VEC];
             for (int i=0;i<=MAX_VEC;i++) sir_auxiliar[i]=NULL;
             for (int i=0;i<=MAX_VEC;i++) sir_complet[i]=NULL;
             citireBIG(String,v1,l);
@@ -231,10 +231,10 @@ void meniuCifBig(){
             infixtoprefixBIG(v1,v3,l);
             memorareROsirBIG(v3,l,sir_auxiliar);
             strcpy(sir_complet+strlen(sir_complet),sir_auxiliar);
-            for (int i=0;i<=MAX_VEC;i++) sir_auxiliar[i]=NULL;
-            strcpy(sir_complet+strlen(sir_complet),"este ");
-            memorareROBIG(N1,1,N1.v[0],sir_auxiliar);
-            strcpy(sir_complet+strlen(sir_complet),sir_auxiliar);
+            for (int i=0;i<=MAX_VEC;i++) sir_auxiliar2[i]=NULL;
+            strcat(sir_complet,"este ");
+            memorareROBIG(N1,1,N1.v[0],sir_auxiliar2);
+            strcpy(sir_complet+strlen(sir_complet),sir_auxiliar2);
 
             // DE EDITAT SIRUL ESTE IN sir_complet
             if(eroare==0) outtextxy(100,500,sir_complet);
@@ -296,7 +296,7 @@ void meniuCifZec(){
             evaluare(String);
             settextstyle(1,HORIZ_DIR,2);
             int l=0,ltot=0;
-            char sir_auxiliar[MAX_VEC],sir_complet[MAX_VEC];
+            char sir_auxiliar[MAX_VEC],sir_complet[MAX_VEC],sir_auxiliar2[MAX_VEC];
             for (int i=0;i<=MAX_VEC;i++) sir_auxiliar[i]=NULL;
             for (int i=0;i<=MAX_VEC;i++) sir_complet[i]=NULL;
             citireREAL(String,V1,l);
@@ -306,10 +306,10 @@ void meniuCifZec(){
             infixtoprefixREAL(V1,V3,l);
             memorareROsirREAL(V3,l,sir_auxiliar);
             strcpy(sir_complet+strlen(sir_complet),sir_auxiliar);
-            for (int i=0;i<=MAX_VEC;i++) sir_auxiliar[i]=NULL;
+            for (int i=0;i<=MAX_VEC;i++) sir_auxiliar2[i]=NULL;
             strcpy(sir_complet+strlen(sir_complet),"este ");
-            memorareROREAL(rezultat_real,sir_auxiliar);
-            strcpy(sir_complet+strlen(sir_complet),sir_auxiliar);
+            memorareROREAL(rezultat_real,sir_auxiliar2);
+            strcpy(sir_complet+strlen(sir_complet),sir_auxiliar2);
 
 
             // DE EDITAT SIRUL ESTE IN sir_complet
