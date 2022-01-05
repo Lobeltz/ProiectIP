@@ -18,7 +18,7 @@ struct BigInt { //Numere mari
     int operatie = 0;
 };
 BigInt N1,N2,N3,v1[100],v2[100],v3[100];
-int k;
+
 struct Real {   //Numere reale
     double n = 0;
     int operatie = 0;
@@ -49,7 +49,7 @@ int numCif[100] = {1, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1
                   };
 char cuvCheie[100][100] = {"suta", "sute", "mie", "mii", "milion", "milioane"};
 int cuvCheieCif[100] = {100, 100, 1000, 1000, 1000000, 1000000};
-int ok, aFostcuvCheie;
+int ok, aFostcuvCheie,k;
 char vecCuv[5000][10000],rez[1000];
 
 char* transfLitCif(char *s);
@@ -58,46 +58,44 @@ char* evaluatorLit(char vecCuv[5000][10000]);
 char* evaluatorBig(char vecCuv[5000][10000]);
 
 void conversie (long long int x , BigInt& nr);// converteste un int in BigInt
-void addlBIG (BigInt& nr , int x);// Adauga cifra x la stanga numarului
-void addrBIG (BigInt& nr , int x);// Adauga cifra x la dreapta numarului
-void clearBIG (BigInt& nr);// Face ca toate valorile unui BigInt sa fie 0
-bool maimareBIG (BigInt numar1 , BigInt numar2);//Compara doua BigInt
+void add_left_Big (BigInt& nr , int x);// Adauga cifra x la stanga numarului
+void add_right_Big (BigInt& nr , int x);// Adauga cifra x la dreapta numarului
+void clear_Big (BigInt& nr);// Face ca toate valorile unui BigInt sa fie 0
+bool mai_mare_Big (BigInt numar1 , BigInt numar2);//Compara doua BigInt
 
-void citireBIG (char sir[] , BigInt vector[] , int& lungime);//Parseaza un sir de caractere si salveaza numerele si operatiile intr-un vector de BigInt
-void citireREAL (char sir[] , Real vector[] , int& lungime);//Parseaza un sir de caractere si salveaza numerele si operatiile intr-un vector de Real
-void afisareBIG (BigInt nr);// Afiseaza un BigInt in cifre
-void afisareREAL (Real x);//Afiseaza un numar Real
-void afisareROBIG (BigInt numar , int poz , int pas);//Afiseaza un BigInt in litere (se apeleaza astfel: afisareROBIG (numar, 1 , numar.v[0]) )
-void memorareROBIG (BigInt numar , int poz , int pas , char sir_caractere[]);//Memoreaza un BigInt intr-un sir de caractere
-void afisareROREAL (Real x);//Afiseaza un Real in litere
-void memorareROREAL (Real x , char sir_caractere[]);//Memoreaza un Real intr-un sir de caractere
-void afisareROsirBIG (BigInt vector[] , int lungime);//Traduce un vector de BigInt in limba romana (vecotrul trebuie sa aiba forma prefixata)
-void memorareROsirBIG (BigInt vector[] , int lungime , char sir_caractere[]);//Traduce un vector de BigInt in limba romana si il pune intr-un sir de caractere (vecotrul trebuie sa aiba forma prefixata)
-void afisareROsirREAL (Real vector[] , int lungime);//Traduce un vector de Real in limba romana (vecotrul trebuie sa aiba forma prefixata)
-void memorareROsirREAL (Real vector[] , int lungime , char sir_caractere[]);//Traduce un vector de Real in limba romana si il pune intr-un sir de caractere (vecotrul trebuie sa aiba forma prefixata)
+void citire_Big (char sir[] , BigInt vector[] , int& lungime);//Parseaza un sir de caractere si salveaza numerele si operatiile intr-un vector de BigInt
+void citire_Real (char sir[] , Real vector[] , int& lungime);//Parseaza un sir de caractere si salveaza numerele si operatiile intr-un vector de Real
+void afisare_Big (BigInt nr);// Afiseaza un BigInt in cifre
+void afisare_Real (Real x);//Afiseaza un numar Real
+void afisare_ro_Big (BigInt numar , int poz , int pas);//Afiseaza un BigInt in litere (se apeleaza astfel: afisare_ro_Big (numar, 1 , numar.v[0]) )
+void memorare_ro_Big (BigInt numar , int poz , int pas , char sir_caractere[]);//Memoreaza un BigInt intr-un sir de caractere
+void afisare_ro_Real (Real x);//Afiseaza un Real in litere
+void memorare_ro_Real (Real x , char sir_caractere[]);//Memoreaza un Real intr-un sir de caractere
+void afisare_ro_sir_Big (BigInt vector[] , int lungime);//Traduce un vector de BigInt in limba romana (vecotrul trebuie sa aiba forma prefixata)
+void memorare_ro_sir_Big (BigInt vector[] , int lungime , char sir_caractere[]);//Traduce un vector de BigInt in limba romana si il pune intr-un sir de caractere (vecotrul trebuie sa aiba forma prefixata)
+void afisare_ro_sir_Real (Real vector[] , int lungime);//Traduce un vector de Real in limba romana (vecotrul trebuie sa aiba forma prefixata)
+void memorare_ro_sir_Real (Real vector[] , int lungime , char sir_caractere[]);//Traduce un vector de Real in limba romana si il pune intr-un sir de caractere (vecotrul trebuie sa aiba forma prefixata)
 
-void adunareBIG (BigInt& nr1 , BigInt& nr2 , BigInt& nr3);// Calculeaza suma a doua BigInt
-void scadereBIG (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat);// Calculeaza diferenta a doua BigInt
-void scaderesecundaraBIG (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat , bool semn);// Functie secundara pentru scadere, calculeaza propiu-zis diferenta a doua numere pozitive primul avand mai multe cifre
-void inmultireBIG (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat);//Inumlteste doua BigInt
-void inmultiresBIG (BigInt& numar1 , int cifra , BigInt& rezultat , int zero);//Functie secundara pentru inmultire, calculeaza produsul dintre un BigInt si o cifra si adauga un numar specificat de zerouri
-void impartireBIG (BigInt deimpartit , BigInt impartitor , BigInt& cat);//Calculeaza catul impartirii naturale a doua BigInt
-void impartiresBIG (BigInt& nr1 , int x , BigInt& nr2);//Imparte un BigInt la o cifra  (nefolosit)
+void adunare_Big (BigInt& nr1 , BigInt& nr2 , BigInt& nr3);// Calculeaza suma a doua BigInt
+void scadere_Big (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat);// Calculeaza diferenta a doua BigInt
+void scadere_secundara_Big (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat , bool semn);// Functie secundara pentru scadere, calculeaza propiu-zis diferenta a doua numere pozitive primul avand mai multe cifre
+void inmultire_Big (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat);//Inumlteste doua BigInt
+void inmultire_secundara_Big (BigInt& numar1 , int cifra , BigInt& rezultat , int zero);//Functie secundara pentru inmultire, calculeaza produsul dintre un BigInt si o cifra si adauga un numar specificat de zerouri
+void impartire_Big (BigInt deimpartit , BigInt impartitor , BigInt& cat);//Calculeaza catul impartirii naturale a doua BigInt
+void impartire_secundara_Big (BigInt& nr1 , int x , BigInt& nr2);//Imparte un BigInt la o cifra  (nefolosit)
 
-int prioBIG (BigInt Operator);//Calculeaza prioritate operatorilor pentru conversia postfixata
-int prioREAL (Real nr);//Calculeaza prioritate operatorilor pentru conversia postfixata
-void infixtopostfixBIG (BigInt vector1[] , BigInt vector2[] , int& lungime);//Transforma vectorul 1 de BigInt cu forma infixata in vectorul 2 cu forma postfixata. Functia actualizeaza lungimea
-void infixtopostfixREAL (Real vector1[] , Real vector2[] , int& lungime);//Transforma vectorul 1 de Real cu forma infixata in vectorul 2 cu forma postfixata. Functia actualizeaza lungimea
-BigInt evalpostfixBIG (BigInt vector[] , int lungime);//Evalueaza o expresie postfixata si returneaza rezultatul
-Real evalpostfixREAL (Real vector[] , int lungime);//Evalueaza o expresie postfixata si returneaza rezultatul
-void infixtoprefixBIG (BigInt vector1[] , BigInt vector2[] , int& lungime);//Transforma vectorul 1 de BigInt cu forma infixata in vectorul 2 cu forma prefixata
-void infixtoprefixREAL (Real vector1[] , Real vector2[] , int& lungime);//Afiseaza un Real in litere
-void evaluare(char sir_caractere[]);
-
-int pozitie_text_x=300,pozitie_text_y=100;
-int eroare;
+int prio_Big (BigInt Operator);//Calculeaza prioritate operatorilor pentru conversia postfixata
+int prio_Real (Real nr);//Calculeaza prioritate operatorilor pentru conversia postfixata
+void infix_to_postfix_Big (BigInt vector1[] , BigInt vector2[] , int& lungime);//Transforma vectorul 1 de BigInt cu forma infixata in vectorul 2 cu forma postfixata. Functia actualizeaza lungimea
+void infix_to_postfix_Real (Real vector1[] , Real vector2[] , int& lungime);//Transforma vectorul 1 de Real cu forma infixata in vectorul 2 cu forma postfixata. Functia actualizeaza lungimea
+BigInt eval_postfix_Big (BigInt vector[] , int lungime);//Evalueaza o expresie postfixata si returneaza rezultatul
+Real eval_postfix_Real (Real vector[] , int lungime);//Evalueaza o expresie postfixata si returneaza rezultatul
+void infix_to_prefix_Big (BigInt vector1[] , BigInt vector2[] , int& lungime);//Transforma vectorul 1 de BigInt cu forma infixata in vectorul 2 cu forma prefixata
+void infix_to_prefix_Real (Real vector1[] , Real vector2[] , int& lungime);//Afiseaza un Real in litere
+void evaluare(char sir_caractere[]);//Verifica corectitudinea unei expresii matematice
 
 int done;
+
 void meniu1();
 void meniuZecim();
 void meniuBig();
@@ -107,12 +105,16 @@ void meniuLitZec();
 void meniuCifBig();
 void meniuCifZec();
 
+int pozitiex_text_scris=300,pozitiey_text_scris=100,pozitiex_text_afisat=100,pozitiey_text_afisat=500;
+int text_style=2,text_size1=10,text_size2=4;
+int eroare;
+
 
 
 
  void meniuLitBig()
 {
-    settextstyle(1,HORIZ_DIR,5);
+    settextstyle(text_style,HORIZ_DIR,text_size1);
     cleardevice();
     readimagefile("back.jpg",900,800,1020,920);
 
@@ -124,15 +126,15 @@ void meniuCifZec();
     while(kbhit())getch();
     while(caracter!=13 || caracter!=27){
         if(caracter==13){
-            settextstyle(1,HORIZ_DIR,2);//enter
+            settextstyle(text_style,HORIZ_DIR,text_size2);//enter
             introdVec(String);
             BigInt numar;
             char sir[1000]={0},sir2[1000]={0};
             strcpy(sir,evaluatorBig(vecCuv));
             for(int i=0;i<strlen(sir);i++)
-                addrBIG(numar,sir[i]-'0');
-            memorareROBIG(numar,1,numar.v[0],sir2);
-            outtextxy(100,500,sir2);
+                add_right_Big(numar,sir[i]-'0');
+            memorare_ro_Big(numar,1,numar.v[0],sir2);
+            outtextxy(pozitiex_text_afisat,pozitiey_text_afisat,sir2);
             break;
         }
         if(caracter==27){       //escape
@@ -143,7 +145,7 @@ void meniuCifZec();
         if(strchr(caractere_valide_litere,caracter)==0) continue;
         String[sfarsit_string]=caracter;
         String[sfarsit_string+1]=NULL;
-        outtextxy(pozitie_text_x,pozitie_text_y,String);
+        outtextxy(pozitiex_text_scris,pozitiey_text_scris,String);
         sfarsit_string++;
     }
     while(1 && not_escaped){
@@ -161,7 +163,7 @@ void meniuCifZec();
 }
 void meniuLitZec()
 {
-    settextstyle(1,HORIZ_DIR,5);
+    settextstyle(text_style,HORIZ_DIR,text_size1);
     cleardevice();
     readimagefile("back.jpg",900,800,1020,920);
 
@@ -173,7 +175,7 @@ void meniuLitZec()
     while(kbhit())getch();
     while(caracter!=13 || caracter!=27){
         if(caracter==13){       //enter
-            settextstyle(1,HORIZ_DIR,2);
+            settextstyle(text_style,HORIZ_DIR,text_size2);
             introdVec(String);
             outtextxy(100,500,evaluatorLit(vecCuv));
             BigInt numar,numar2;
@@ -181,21 +183,21 @@ void meniuLitZec()
             strcpy(sir1,evaluatorLit(vecCuv));
             int i;
             for(i=0;i<strlen(sir1) && sir1[i]!='.';i++)
-                addrBIG(numar,sir1[i]-'0');
-            memorareROBIG(numar,1,numar.v[0],sir2);
+                add_right_Big(numar,sir1[i]-'0');
+            memorare_ro_Big(numar,1,numar.v[0],sir2);
 
             if(strchr(sir1,'.')!=0)
             {
                 i++;
                 for(;i<strlen(sir1);i++)
-                    addrBIG(numar2,sir1[i]-'0');
-                memorareROBIG(numar2,1,numar2.v[0],sir3);
+                    add_right_Big(numar2,sir1[i]-'0');
+                memorare_ro_Big(numar2,1,numar2.v[0],sir3);
                 strcat(sir2," virgula ");strcat(sir2,sir3);
             }
 
             char sir4[1000]="este ";
             strcat(sir4,sir2);
-            outtextxy(100,500,sir4);
+            outtextxy(pozitiex_text_afisat,pozitiey_text_afisat,sir4);
             break;
         }
         if(caracter==27){       //escape
@@ -206,7 +208,7 @@ void meniuLitZec()
         if(strchr(caractere_valide_litere,caracter)==0) continue;
         String[sfarsit_string]=caracter;
         String[sfarsit_string+1]=NULL;
-        outtextxy(pozitie_text_x,pozitie_text_y,String);
+        outtextxy(pozitiex_text_scris,pozitiey_text_scris,String);
         sfarsit_string++;
     }
     while(1 && not_escaped){
@@ -222,9 +224,8 @@ void meniuLitZec()
     eroare=0;
     meniuZecim();
 }
-void meniuCifBig()
-{
-    settextstyle(1,HORIZ_DIR,5);
+void meniuCifBig(){
+    settextstyle(text_style,HORIZ_DIR,text_size1);
     cleardevice();
     readimagefile("back.jpg",900,800,1020,920);
 
@@ -234,39 +235,33 @@ void meniuCifBig()
     short x,y;
 
     while(kbhit())getch();
-    while(caracter!=13 || caracter!=27){
+    while(caracter!=13 || caracter!='ESC'){
         if(caracter==13){       //enter
             evaluare(String);
-            settextstyle(1,HORIZ_DIR,2);
+            settextstyle(text_style,HORIZ_DIR,text_size2);
             int l=0,ltot=0;
-            char sir_auxiliar[MAX_VEC],sir_complet[MAX_VEC],sir_auxiliar2[MAX_VEC];
-            for (int i=0;i<=MAX_VEC;i++) sir_auxiliar[i]=NULL;
-            for (int i=0;i<=MAX_VEC;i++) sir_complet[i]=NULL;
-            citireBIG(String,v1,l);
+            char sir_auxiliar[MAX_VEC]={0},sir_complet[MAX_VEC]={0},sir_auxiliar2[MAX_VEC]={0};
+            citire_Big(String,v1,l);
             ltot=l;
-            infixtopostfixBIG(v1,v2,ltot);
-            N1=evalpostfixBIG(v2,ltot);
-            infixtoprefixBIG(v1,v3,l);
-            memorareROsirBIG(v3,l,sir_auxiliar);
+            infix_to_postfix_Big(v1,v2,ltot);
+            N1=eval_postfix_Big(v2,ltot);
+            infix_to_prefix_Big(v1,v3,l);
+            memorare_ro_sir_Big(v3,l,sir_auxiliar);
             strcpy(sir_complet+strlen(sir_complet),sir_auxiliar);
-            for (int i=0;i<=MAX_VEC;i++) sir_auxiliar2[i]=NULL;
             strcat(sir_complet,"este ");
-            memorareROBIG(N1,1,N1.v[0],sir_auxiliar2);
+            memorare_ro_Big(N1,1,N1.v[0],sir_auxiliar2);
             strcpy(sir_complet+strlen(sir_complet),sir_auxiliar2);
 
             // DE EDITAT SIRUL ESTE IN sir_complet
-            if(eroare==0) outtextxy(100,500,sir_complet);
+            if(eroare==0) outtextxy(pozitiex_text_afisat,pozitiey_text_afisat,sir_complet);
             else {
-                if (eroare==1) outtextxy(100,500,"EROARE: Impartire la 0");
-                else if(eroare) outtextxy(100,500,"EROARE: Sintaxa Gresita");
+                if (eroare==1) outtextxy(pozitiex_text_afisat,pozitiey_text_afisat,"EROARE: Impartire la 0");
+                else if(eroare) outtextxy(pozitiex_text_afisat,pozitiey_text_afisat,"EROARE: Sintaxa Gresita");
             }
-
-            for (int i=0;i<=MAX_VEC;i++) sir_auxiliar[i]=NULL;
-            for (int i=0;i<=MAX_VEC;i++) sir_complet[i]=NULL;
 
             break;
         }
-        if(caracter==27){       //escape
+        if(caracter=='ESC'){       //escape
             not_escaped=0;
             break;
         }
@@ -274,7 +269,7 @@ void meniuCifBig()
         if(strchr(caractere_valide_cifre,caracter)==0) continue;
         String[sfarsit_string]=caracter;
         String[sfarsit_string+1]=NULL;
-        outtextxy(pozitie_text_x,pozitie_text_y,String);
+        outtextxy(pozitiex_text_scris,pozitiey_text_scris,String);
         sfarsit_string++;
     }
     while(1 && not_escaped){
@@ -288,17 +283,17 @@ void meniuCifBig()
         }
     }
 
-    clearBIG(N1);clearBIG(N2);clearBIG(N3);
+    clear_Big(N1);clear_Big(N2);clear_Big(N3);
     for(int i=0;i<=100;i++){
-        clearBIG(v1[i]);
-        clearBIG(v2[i]);
-        clearBIG(v3[i]);
+        clear_Big(v1[i]);
+        clear_Big(v2[i]);
+        clear_Big(v3[i]);
     }
     eroare=0;
     meniuBig();
 }
 void meniuCifZec(){
-    settextstyle(1,HORIZ_DIR,5);
+    settextstyle(text_style,HORIZ_DIR,text_size1);
     cleardevice();
     readimagefile("back.jpg",900,800,1020,920);
 
@@ -308,41 +303,32 @@ void meniuCifZec(){
     short x,y;
 
     while(kbhit())getch();
-    while(caracter!=13 || caracter!=27){
+    while(caracter!=13 || caracter!='ESC'){
         if(caracter==13){       //enter
             evaluare(String);
-            settextstyle(1,HORIZ_DIR,2);
+            settextstyle(text_style,HORIZ_DIR,text_size2);
             int l=0,ltot=0;
-            char sir_auxiliar[MAX_VEC],sir_complet[MAX_VEC],sir_auxiliar2[MAX_VEC];
-            for (int i=0;i<=MAX_VEC;i++) sir_auxiliar[i]=NULL;
-            for (int i=0;i<=MAX_VEC;i++) sir_complet[i]=NULL;
-            citireREAL(String,V1,l);
+            char sir_auxiliar[MAX_VEC]={0},sir_complet[MAX_VEC]={0},sir_auxiliar2[MAX_VEC]={0};
+            citire_Real(String,V1,l);
             ltot=l;
-            infixtopostfixREAL(V1,V2,ltot);
-            rezultat_real=evalpostfixREAL(V2,ltot);
-            infixtoprefixREAL(V1,V3,l);
-            memorareROsirREAL(V3,l,sir_auxiliar);
+            infix_to_postfix_Real(V1,V2,ltot);
+            rezultat_real=eval_postfix_Real(V2,ltot);
+            infix_to_prefix_Real(V1,V3,l);
+            memorare_ro_sir_Real(V3,l,sir_auxiliar);
             strcpy(sir_complet+strlen(sir_complet),sir_auxiliar);
-            for (int i=0;i<=MAX_VEC;i++) sir_auxiliar2[i]=NULL;
             strcpy(sir_complet+strlen(sir_complet),"este ");
-            memorareROREAL(rezultat_real,sir_auxiliar2);
+            memorare_ro_Real(rezultat_real,sir_auxiliar2);
             strcpy(sir_complet+strlen(sir_complet),sir_auxiliar2);
 
-
-            // DE EDITAT SIRUL ESTE IN sir_complet
-            if(eroare==0) outtextxy(100,500,sir_complet);
+            if(eroare==0) outtextxy(pozitiex_text_afisat,pozitiey_text_afisat,sir_complet);
             else {
-                if (eroare==1) outtextxy(100,500,"EROARE: Impartire la 0");
-                else if(eroare) outtextxy(100,500,"EROARE: Sintaxa Gresita");
+                if (eroare==1) outtextxy(pozitiex_text_afisat,pozitiey_text_afisat,"EROARE: Impartire la 0");
+                else if(eroare) outtextxy(pozitiex_text_afisat,pozitiey_text_afisat,"EROARE: Sintaxa Gresita");
             }
-
-            eroare=0;
-            for (int i=0;i<=MAX_VEC;i++) sir_auxiliar[i]=NULL;
-            for (int i=0;i<=MAX_VEC;i++) sir_complet[i]=NULL;
 
             break;
         }
-        if(caracter==27){       //escape
+        if(caracter=='ESC'){       //escape
             not_escaped=0;
             break;
         }
@@ -350,11 +336,10 @@ void meniuCifZec(){
         if(strchr(caractere_valide_cifre,caracter)==0) continue;
         String[sfarsit_string]=caracter;
         String[sfarsit_string+1]=NULL;
-        outtextxy(pozitie_text_x,pozitie_text_y,String);
+        outtextxy(pozitiex_text_scris,pozitiey_text_scris,String);
         sfarsit_string++;
     }
     while(1 && not_escaped){
-
         if(ismouseclick(WM_LBUTTONDOWN)){
             clearmouseclick(WM_LBUTTONDOWN);
             x=mousex();
@@ -377,7 +362,7 @@ void meniuCifZec(){
 
 void meniuBig()
 {
-    settextstyle(1,HORIZ_DIR,5);
+    settextstyle(text_style,HORIZ_DIR,text_size1);
     cleardevice();
     short x,y;
     //readimagefile("fundal.jpg",0,0,1920,1080);
@@ -398,12 +383,11 @@ void meniuBig()
             else
                 if(x>600&&x<1325&&y>500&&y<600)
                     meniuCifBig();
-
         }
 }
 void meniuZecim()
 {
-    settextstyle(1,HORIZ_DIR,5);
+    settextstyle(text_style,HORIZ_DIR,text_size1);
     cleardevice();
     short x,y;
     //readimagefile("fundal.jpg",0,0,1920,1080);
@@ -433,7 +417,7 @@ void meniu2()
     cleardevice();
     short x,y;
     //readimagefile("fundal.jpg",0,0,1920,1080);
-    settextstyle(1,HORIZ_DIR,5);
+    settextstyle(text_style,HORIZ_DIR,text_size1);
     setcolor(10);
     setbkcolor(1);
     outtextxy(530,300,"Rezultate cu numere zecimale");
@@ -509,27 +493,27 @@ void conversie (long long int x , BigInt& numar) {
 }
 
 // Adauga cifra x la stanga numarului
-void addlBIG (BigInt& numar , int x) {
+void add_left_Big (BigInt& numar , int x) {
     for ( int i = 1; i <= numar.v[0]; i++ ) numar.v[i + 1] = numar.v[i];
     numar.v[1] = x;
     numar.v[0]++;
 }
 // Adauga cifra x la dreapta numarului
-void addrBIG (BigInt& numar , int x) {
+void add_right_Big (BigInt& numar , int x) {
     if ( numar.v[0] == 0 && x == 0 ) return;
     numar.v[0]++;
     numar.v[numar.v[0]] = x;
 }
 
 // Face ca toate valorile unui BigInt sa fie 0
-void clearBIG (BigInt& numar) {
+void clear_Big (BigInt& numar) {
     for ( int i = 0; i < 100; i++ ) numar.v[i] = 0;
     numar.semn = 0;
     numar.operatie = 0;
 }
 
 //Compara doua BigInt
-bool maimareBIG (BigInt numar1 , BigInt numar2) {
+bool mai_mare_Big (BigInt numar1 , BigInt numar2) {
     if ( numar1.v[0] > numar2.v[0] ) return 1;
     if ( numar2.v[0] > numar1.v[0] ) return 0;
     for ( int i = 1; i <= numar1.v[0]; i++ ) {
@@ -541,16 +525,16 @@ bool maimareBIG (BigInt numar1 , BigInt numar2) {
 
 
 //Parseaza un sir de caractere si salveaza numerele si operatiile intr-un vector de BigInt
-void citireBIG (char sir[] , BigInt vector[] , int& lungime) {
+void citire_Big (char sir[] , BigInt vector[] , int& lungime) {
     int pozitie = 1;
     bool operatie = 0; //doi operatori unul dupa altul
     for ( int i = 0; i <= strlen (sir); i++ ) {
         if ( sir[i] >= 48 && sir[i] <= 57 ) { //cifra
             operatie = 0;
             if ( vector[pozitie].operatie ) pozitie++;
-            addrBIG (vector[pozitie] , ( (int)sir[i] - '0' ));
+            add_right_Big (vector[pozitie] , ( (int)sir[i] - '0' ));
         }
-        else if ( sir[i] == 43 ) {
+        else if ( sir[i] == '+' ) {
             if ( operatie == 1 ) {
                 fout << "EROARE DE SINTAXA";
                 break;
@@ -559,7 +543,7 @@ void citireBIG (char sir[] , BigInt vector[] , int& lungime) {
             pozitie++;
             vector[pozitie].operatie = 1;// +
         }
-        else if ( sir[i] == 45 ) {
+        else if ( sir[i] == '-' ) {
             if ( operatie == 1 ) {
                 if ( vector[pozitie + 1].semn == 1 ) {
                     fout << "EROARE DE SINTAXA";
@@ -573,7 +557,7 @@ void citireBIG (char sir[] , BigInt vector[] , int& lungime) {
                 vector[pozitie].operatie = 2; // -
             }
         }
-        else if ( sir[i] == 42 || sir[i] == 120 ) {
+        else if ( sir[i] == '*' || sir[i] == 'x' ) {
             if ( operatie == 1 ) {
                 fout << "EROARE DE SINTAXA";
                 break;
@@ -582,7 +566,7 @@ void citireBIG (char sir[] , BigInt vector[] , int& lungime) {
             pozitie++;
             vector[pozitie].operatie = 3; // * x
         }
-        else if ( sir[i] == 47 || sir[i] == 58 ) {
+        else if ( sir[i] == '/' || sir[i] == ':' ) {
             if ( operatie == 1 ) {
                 fout << "EROARE DE SINTAXA";
                 break;
@@ -591,11 +575,11 @@ void citireBIG (char sir[] , BigInt vector[] , int& lungime) {
             pozitie++;
             vector[pozitie].operatie = 4; // / :
         }
-        else if ( sir[i] == 40 ) {
+        else if ( sir[i] == '(' ) {
             if ( pozitie != 1 ) pozitie++;
             vector[pozitie].operatie = 6; // (
         }
-        else if ( sir[i] == 41 ) {
+        else if ( sir[i] == ')' ) {
             if ( pozitie != 1 ) pozitie++;
             vector[pozitie].operatie = 7; // )
         }
@@ -603,7 +587,7 @@ void citireBIG (char sir[] , BigInt vector[] , int& lungime) {
     lungime = pozitie;
 }
 //Parseaza un sir de caractere si salveaza numerele si operatiile intr-un vector de Real
-void citireREAL (char sir[] , Real vector[] , int& lungime) {
+void citire_Real (char sir[] , Real vector[] , int& lungime) {
 
     int pozitie = 1;
     bool operatie = 0; //doi operatori unul dupa altul
@@ -613,7 +597,7 @@ void citireREAL (char sir[] , Real vector[] , int& lungime) {
             if ( vector[pozitie].operatie ) pozitie++;
             vector[pozitie].n = vector[pozitie].n * 10 + ( (int)sir[i] - '0' ); //adaug cifra la dreapta numarului
         }
-        else if ( sir[i] == 43 ) {
+        else if ( sir[i] == '+' ) {
             if ( operatie == 1 ) {
                 fout << "EROARE DE SINTAXA";
                 break;
@@ -622,7 +606,7 @@ void citireREAL (char sir[] , Real vector[] , int& lungime) {
             pozitie++;
             vector[pozitie].operatie = 1;// +
         }
-        else if ( sir[i] == 45 ) {
+        else if ( sir[i] == '-' ) {
             if ( operatie == 1 ) {
                 fout << "EROARE DE SINTAXA";
                 break;
@@ -632,7 +616,7 @@ void citireREAL (char sir[] , Real vector[] , int& lungime) {
             vector[pozitie].operatie = 2; // -
 
         }
-        else if ( sir[i] == 42 || sir[i] == 120 ) {
+        else if ( sir[i] == '*' || sir[i] == 'x' ) {
             if ( operatie == 1 ) {
                 fout << "EROARE DE SINTAXA";
                 break;
@@ -641,7 +625,7 @@ void citireREAL (char sir[] , Real vector[] , int& lungime) {
             pozitie++;
             vector[pozitie].operatie = 3; // * x
         }
-        else if ( sir[i] == 47 || sir[i] == 58 ) {
+        else if ( sir[i] == '/' || sir[i] == ':' ) {
             if ( operatie == 1 ) {
                 fout << "EROARE DE SINTAXA";
                 break;
@@ -650,11 +634,11 @@ void citireREAL (char sir[] , Real vector[] , int& lungime) {
             pozitie++;
             vector[pozitie].operatie = 4; // / :
         }
-        else if ( sir[i] == 40 ) {
+        else if ( sir[i] == '(' ) {
             if ( pozitie != 1 ) pozitie++;
             vector[pozitie].operatie = 6; // (
         }
-        else if ( sir[i] == 41 ) {
+        else if ( sir[i] == ')' ) {
             if ( pozitie != 1 ) pozitie++;
             vector[pozitie].operatie = 7; // )
         }
@@ -663,7 +647,7 @@ void citireREAL (char sir[] , Real vector[] , int& lungime) {
 }
 
 // Afiseaza un BigInt in cifre
-void afisareBIG (BigInt numar) {
+void afisare_Big (BigInt numar) {
     if ( numar.operatie ) {
         fout << sir_operatori[numar.operatie];
     }
@@ -680,19 +664,18 @@ void afisareBIG (BigInt numar) {
 }
 
 //Afiseaza un numar Real
-void afisareREAL (Real x) {
+void afisare_Real (Real x) {
     if ( x.operatie ) fout << sir_operatori[x.operatie];
     else fout << setprecision (15) << x.n;
 }
 
-//Afiseaza un BigInt in litere (se apeleaza astfel: afisareROBIG (numar, 1 , numar.v[0]) )
-void afisareROBIG (BigInt numar , int poz , int pas) {
+//Afiseaza un BigInt in litere (se apeleaza astfel: afisare_ro_Big (numar, 1 , numar.v[0]) )
+void afisare_ro_Big (BigInt numar , int poz , int pas) {
     if ( numar.operatie ) {
         if ( numar.operatie == 1 ) fout << "plus ";
         else if ( numar.operatie == 2 ) fout << "minus ";
         else if ( numar.operatie == 3 ) fout << "ori ";
         else if ( numar.operatie == 4 ) fout << "impartit la ";
-        else if ( numar.operatie == 5 ) fout << "egal ";
         return;
     }
     if ( numar.v[0] == 0 ) {
@@ -705,7 +688,7 @@ void afisareROBIG (BigInt numar , int poz , int pas) {
     }
     else if ( pas == 2 ) {                              //pozitia zecilor
         if ( numar.v[poz] == 0 ) {
-            afisareROBIG (numar , poz + 1 , 1);
+            afisare_ro_Big (numar , poz + 1 , 1);
         }
         else if ( numar.v[poz] == 1 ) {                 //10-19
             fout << sir_cifre_mari[numar.v[poz + 1] + 9] << ' ';
@@ -717,26 +700,26 @@ void afisareROBIG (BigInt numar , int poz , int pas) {
     }
     else if ( pas == 3 ) {                              //pozitia sutelor
         if ( numar.v[poz] == 0 ) {
-            afisareROBIG (numar , poz + 1 , 2);
+            afisare_ro_Big (numar , poz + 1 , 2);
         }
         else if ( numar.v[poz] == 1 ) {                 //100-199
             fout << sir_cifre_mari[27] << ' ';
-            afisareROBIG (numar , poz + 1 , 2);
+            afisare_ro_Big (numar , poz + 1 , 2);
         }
         else {                                          //200-999
             if ( numar.v[poz] == 2 ) fout << "doua ";
             else fout << sir_cifre_mari[numar.v[poz] - 1] << ' ';
             fout << sir_cifre_mari[28] << ' ';
-            afisareROBIG (numar , poz + 1 , 2);
+            afisare_ro_Big (numar , poz + 1 , 2);
         }
     }
     else if ( ( pas - 1 ) % 3 == 0 ) {                  //unitate
         if ( numar.v[poz] == 0 ) {
-            afisareROBIG (numar , poz + 1 , pas - 1);
+            afisare_ro_Big (numar , poz + 1 , pas - 1);
         }
         else if ( numar.v[poz] == 1 ) {
             fout << sir_cifre_mari[pas / 3 * 2 + 27] << ' ';
-            afisareROBIG (numar , poz + 1 , pas - 1);
+            afisare_ro_Big (numar , poz + 1 , pas - 1);
         }
         else {
             if ( numar.v[poz] == 2 ) {
@@ -746,186 +729,185 @@ void afisareROBIG (BigInt numar , int poz , int pas) {
                 fout << sir_cifre_mari[numar.v[poz] - 1] << ' ';
                 fout << sir_cifre_mari[pas / 3 * 2 + 28] << ' ';
             }
-            afisareROBIG (numar , poz + 1 , pas - 1);
+            afisare_ro_Big (numar , poz + 1 , pas - 1);
         }
     }
     else if ( ( pas - 2 ) % 3 == 0 ) {                  //zeci
         if ( numar.v[poz] == 0 ) {
-            afisareROBIG (numar , poz + 1 , pas - 1);
+            afisare_ro_Big (numar , poz + 1 , pas - 1);
         }
         else if ( numar.v[poz] == 1 ) {
-            afisareROBIG (numar , poz , 2);
+            afisare_ro_Big (numar , poz , 2);
             if ( numar.v[poz] ) {
                 fout << ' ' << sir_cifre_mari[pas / 3 * 2 + 28] << ' ';
             }
-            afisareROBIG (numar , poz + 2 , pas - 2);
+            afisare_ro_Big (numar , poz + 2 , pas - 2);
         }
         else {
-            afisareROBIG (numar , poz , 2);
+            afisare_ro_Big (numar , poz , 2);
             if ( numar.v[poz] ) {
                 fout << "de " << sir_cifre_mari[pas / 3 * 2 + 28] << ' ';
             }
-            afisareROBIG (numar , poz + 2 , pas - 2);
+            afisare_ro_Big (numar , poz + 2 , pas - 2);
         }
     }
     else {                                              //sute
         if ( numar.v[poz] == 0 ) {
-            afisareROBIG (numar , poz + 1 , pas - 1);
+            afisare_ro_Big (numar , poz + 1 , pas - 1);
         }
         else if ( numar.v[poz] == 1 ) {
-            afisareROBIG (numar , poz , 3);
+            afisare_ro_Big (numar , poz , 3);
             if ( numar.v[poz] ) {
                 fout << "de " << sir_cifre_mari[pas / 3 * 2 + 26] << ' ';
             }
-            afisareROBIG (numar , poz + 3 , pas - 3);
+            afisare_ro_Big (numar , poz + 3 , pas - 3);
         }
         else {
-            afisareROBIG (numar , poz , 3);
+            afisare_ro_Big (numar , poz , 3);
             if ( numar.v[poz] ) {
                 fout << "de " << sir_cifre_mari[pas / 3 * 2 + 26] << ' ';
             }
-            afisareROBIG (numar , poz + 3 , pas - 3);
+            afisare_ro_Big (numar , poz + 3 , pas - 3);
         }
     }
 }
 //Memoreaza un BigInt intr-un sir de caractere
-void memorareROBIG (BigInt numar , int poz , int pas,char sir_caractere[]) {
+void memorare_ro_Big (BigInt numar , int poz , int pas,char sir_caractere[]) {
     if ( numar.operatie ) {
-        if ( numar.operatie == 1 ) strcpy (sir_caractere + strlen (sir_caractere) ,"plus ");
-        else if ( numar.operatie == 2 ) strcpy (sir_caractere + strlen (sir_caractere) ,"minus ");
-        else if ( numar.operatie == 3 ) strcpy (sir_caractere + strlen (sir_caractere) , "ori ");
-        else if ( numar.operatie == 4 ) strcpy (sir_caractere + strlen (sir_caractere) ,"impartit la ");
-        else if ( numar.operatie == 5 ) strcpy (sir_caractere + strlen (sir_caractere) ,"egal ");
+        if ( numar.operatie == 1 ) strcat(sir_caractere ,"plus ");
+        else if ( numar.operatie == 2 ) strcat(sir_caractere ,"minus ");
+        else if ( numar.operatie == 3 ) strcat(sir_caractere , "ori ");
+        else if ( numar.operatie == 4 ) strcat(sir_caractere ,"impartit la ");
+        else if ( numar.operatie == 5 ) strcat(sir_caractere ,"egal ");
         return;
     }
     else{
         if ( numar.v[0] == 0 ) {
-            strcpy (sir_caractere + strlen (sir_caractere) ,"zero ");
+            strcat(sir_caractere ,"zero ");
             return;
         }
-        if ( numar.semn ) strcpy (sir_caractere + strlen (sir_caractere) ,"minus ");
+        if ( numar.semn ) strcat(sir_caractere ,"minus ");
         if ( pas == 1 ) {                                   //pozitia unitatilor
             if ( numar.v[poz] ) {
-                strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[numar.v[poz] - 1]);
-                strcpy (sir_caractere + strlen (sir_caractere) ," ");
+                strcat(sir_caractere , sir_cifre_mari[numar.v[poz] - 1]);
+                strcat(sir_caractere ," ");
             }
         }
         else if ( pas == 2 ) {                              //pozitia zecilor
             if ( numar.v[poz] == 0 ) {
-                memorareROBIG (numar , poz + 1 , 1,sir_caractere);
+                memorare_ro_Big (numar , poz + 1 , 1,sir_caractere);
             }
             else if ( numar.v[poz] == 1 ) {                 //10-19
-                strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[numar.v[poz + 1] + 9]);
-                strcpy (sir_caractere + strlen (sir_caractere) ," ");
+                strcat(sir_caractere , sir_cifre_mari[numar.v[poz + 1] + 9]);
+                strcat(sir_caractere ," ");
             }
             else {                                          //20-99
-                strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[numar.v[poz] + 17]);
-                strcpy (sir_caractere + strlen (sir_caractere) , " ");
+                strcat(sir_caractere , sir_cifre_mari[numar.v[poz] + 17]);
+                strcat(sir_caractere , " ");
                 if ( numar.v[poz + 1] ) {
-                    strcpy (sir_caractere + strlen (sir_caractere) ,"si ");
-                    strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[numar.v[poz + 1] - 1]);
-                    strcpy (sir_caractere + strlen (sir_caractere) ," ");
+                    strcat(sir_caractere ,"si ");
+                    strcat(sir_caractere , sir_cifre_mari[numar.v[poz + 1] - 1]);
+                    strcat(sir_caractere ," ");
                 }
             }
         }
         else if ( pas == 3 ) {                              //pozitia sutelor
             if ( numar.v[poz] == 0 ) {
-                memorareROBIG (numar , poz + 1 , 2,sir_caractere);
+                memorare_ro_Big (numar , poz + 1 , 2,sir_caractere);
             }
             else if ( numar.v[poz] == 1 ) {                 //100-199
-                strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[27]);
-                strcpy (sir_caractere + strlen (sir_caractere) ," ");
-                memorareROBIG (numar , poz + 1 , 2,sir_caractere);
+                strcat(sir_caractere , sir_cifre_mari[27]);
+                strcat(sir_caractere ," ");
+                memorare_ro_Big (numar , poz + 1 , 2,sir_caractere);
             }
             else {                                          //200-999
                 if ( numar.v[poz] == 2 ) {
-                    strcpy (sir_caractere + strlen (sir_caractere) ,"doua ");
+                    strcat(sir_caractere ,"doua ");
                 }
                 else {
-                    fout << sir_cifre_mari[numar.v[poz] - 1] << ' ';
-                    strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[numar.v[poz] - 1]);
-                    strcpy (sir_caractere + strlen (sir_caractere) ," ");
+                    strcat(sir_caractere , sir_cifre_mari[numar.v[poz] - 1]);
+                    strcat(sir_caractere ," ");
                 }
-                strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[28]);
-                strcpy (sir_caractere + strlen (sir_caractere) ," ");
-                memorareROBIG (numar , poz + 1 , 2,sir_caractere);
+                strcat(sir_caractere , sir_cifre_mari[28]);
+                strcat(sir_caractere ," ");
+                memorare_ro_Big (numar , poz + 1 , 2,sir_caractere);
             }
         }
         else if ( ( pas - 1 ) % 3 == 0 ) {                  //unitate
             if ( numar.v[poz] == 0 ) {
-                memorareROBIG (numar , poz + 1 , pas - 1,sir_caractere);
+                memorare_ro_Big (numar , poz + 1 , pas - 1,sir_caractere);
             }
             else if ( numar.v[poz] == 1 ) {
-                strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[pas / 3 * 2 + 27]);
-                strcpy (sir_caractere + strlen (sir_caractere) ," ");
-                memorareROBIG (numar , poz + 1 , pas - 1,sir_caractere);
+                strcat(sir_caractere , sir_cifre_mari[pas / 3 * 2 + 27]);
+                strcat(sir_caractere ," ");
+                memorare_ro_Big (numar , poz + 1 , pas - 1,sir_caractere);
             }
             else {
                 if ( numar.v[poz] == 2 ) {
-                    strcpy (sir_caractere + strlen (sir_caractere) ,"doua ");
-                    strcpy (sir_caractere + strlen (sir_caractere) ,sir_cifre_mari[pas / 3 + 28]);
-                    strcpy (sir_caractere + strlen (sir_caractere) ," ");
+                    strcat(sir_caractere ,"doua ");
+                    strcat(sir_caractere ,sir_cifre_mari[pas / 3 + 28]);
+                    strcat(sir_caractere ," ");
                 }
                 else if ( numar.v[poz] ) {
-                    strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[numar.v[poz] - 1]);
-                    strcpy (sir_caractere + strlen (sir_caractere) ," ");
-                    strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[pas / 3 * 2 + 28]);
-                    strcpy (sir_caractere + strlen (sir_caractere) ," ");
+                    strcat(sir_caractere , sir_cifre_mari[numar.v[poz] - 1]);
+                    strcat(sir_caractere ," ");
+                    strcat(sir_caractere , sir_cifre_mari[pas / 3 * 2 + 28]);
+                    strcat(sir_caractere ," ");
                 }
-                memorareROBIG (numar , poz + 1 , pas - 1,sir_caractere);
+                memorare_ro_Big (numar , poz + 1 , pas - 1,sir_caractere);
             }
         }
         else if ( ( pas - 2 ) % 3 == 0 ) {                  //zeci
             if ( numar.v[poz] == 0 ) {
-                memorareROBIG (numar , poz + 1 , pas - 1,sir_caractere);
+                memorare_ro_Big (numar , poz + 1 , pas - 1,sir_caractere);
             }
             else if ( numar.v[poz] == 1 ) {
-                memorareROBIG (numar , poz , 2,sir_caractere);
+                memorare_ro_Big (numar , poz , 2,sir_caractere);
                 if ( numar.v[poz] ) {
-                    strcpy (sir_caractere + strlen (sir_caractere) ," ");
-                    strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[pas / 3 * 2 + 28]);
-                    strcpy (sir_caractere + strlen (sir_caractere) ," ");
+                    strcat(sir_caractere ," ");
+                    strcat(sir_caractere , sir_cifre_mari[pas / 3 * 2 + 28]);
+                    strcat(sir_caractere ," ");
                 }
-                memorareROBIG (numar , poz + 2 , pas - 2,sir_caractere);
+                memorare_ro_Big (numar , poz + 2 , pas - 2,sir_caractere);
             }
             else {
-                memorareROBIG (numar , poz , 2,sir_caractere);
+                memorare_ro_Big (numar , poz , 2,sir_caractere);
                 if ( numar.v[poz] ) {
-                    strcpy (sir_caractere + strlen (sir_caractere) ,"de ");
-                    strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[pas / 3 * 2 + 28]);
-                    strcpy (sir_caractere + strlen (sir_caractere) ," ");
+                    strcat(sir_caractere ,"de ");
+                    strcat(sir_caractere , sir_cifre_mari[pas / 3 * 2 + 28]);
+                    strcat(sir_caractere ," ");
                 }
-                memorareROBIG (numar , poz + 2 , pas - 2,sir_caractere);
+                memorare_ro_Big (numar , poz + 2 , pas - 2,sir_caractere);
             }
         }
         else {                                              //sute
             if ( numar.v[poz] == 0 ) {
-                memorareROBIG (numar , poz + 1 , pas - 1,sir_caractere);
+                memorare_ro_Big (numar , poz + 1 , pas - 1,sir_caractere);
             }
             else if ( numar.v[poz] == 1 ) {
-                memorareROBIG (numar , poz , 3,sir_caractere);
+                memorare_ro_Big (numar , poz , 3,sir_caractere);
                 if ( numar.v[poz] ) {
-                    strcpy (sir_caractere + strlen (sir_caractere) ,"de ");
-                    strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[pas / 3 * 2 + 26]);
-                    strcpy (sir_caractere + strlen (sir_caractere) ," ");
+                    strcat(sir_caractere ,"de ");
+                    strcat(sir_caractere , sir_cifre_mari[pas / 3 * 2 + 26]);
+                    strcat(sir_caractere ," ");
                 }
-                memorareROBIG (numar , poz + 3 , pas - 3,sir_caractere);
+                memorare_ro_Big (numar , poz + 3 , pas - 3,sir_caractere);
             }
             else {
-                memorareROBIG (numar , poz , 3,sir_caractere);
+                memorare_ro_Big (numar , poz , 3,sir_caractere);
                 if ( numar.v[poz] ) {
-                    strcpy (sir_caractere + strlen (sir_caractere) ,"de ");
-                    strcpy (sir_caractere + strlen (sir_caractere) , sir_cifre_mari[pas / 3 * 2 + 26]);
-                    strcpy (sir_caractere + strlen (sir_caractere) ," ");
+                    strcat(sir_caractere ,"de ");
+                    strcat(sir_caractere , sir_cifre_mari[pas / 3 * 2 + 26]);
+                    strcat(sir_caractere ," ");
                 }
-                memorareROBIG (numar , poz + 3 , pas - 3,sir_caractere);
+                memorare_ro_Big (numar , poz + 3 , pas - 3,sir_caractere);
             }
         }
     }
 }
 
 //Afiseaza un Real in litere
-void afisareROREAL (Real x) {
+void afisare_ro_Real (Real x) {
     double intreg , fractionar;
     BigInt intregB , fractionarB;
     int precizie = 1;
@@ -933,22 +915,22 @@ void afisareROREAL (Real x) {
     fractionar = modf (x.n , &intreg);
 
     fractionar *= 10;
-    while ( (int)fractionar > 0 && precizie < 10 ) {
-        addrBIG (fractionarB , (int)fractionar);
+    while ( (int)fractionar > 0 && precizie < 7 ) {
+        add_right_Big (fractionarB , (int)fractionar);
         fractionar -= (int)fractionar;
         fractionar *= 10;
         precizie++;
     }
 
     conversie (intreg , intregB);
-    afisareROBIG (intregB , 1 , intregB.v[0]);
+    afisare_ro_Big (intregB , 1 , intregB.v[0]);
     if ( fractionarB.v[0] ) {
         fout << "virgula ";
-        afisareROBIG (fractionarB , 1 , fractionarB.v[0]);
+        afisare_ro_Big (fractionarB , 1 , fractionarB.v[0]);
     }
 }
 //Memoreaza un Real intr-un sir de caractere
-void memorareROREAL (Real x,char sir_caractere[]) {
+void memorare_ro_Real (Real x,char sir_caractere[]) {
     double intreg , fractionar;
     BigInt intregB , fractionarB;
     int precizie = 1;
@@ -956,29 +938,26 @@ void memorareROREAL (Real x,char sir_caractere[]) {
     fractionar = modf (x.n , &intreg);
 
     fractionar *= 10;
-    while ( (int)fractionar > 0 && precizie < 10 ) {
-        addrBIG (fractionarB , (int)fractionar);
+    while ( (int)fractionar > 0 && precizie < 7 ) {
+        add_right_Big (fractionarB , (int)fractionar);
         fractionar -= (int)fractionar;
         fractionar *= 10;
         precizie++;
     }
-    char auxiliar[MAX_VEC];
-    for ( int i = 0; i < MAX_VEC; i++ ) auxiliar[i] = NULL;
+    char auxiliar[MAX_VEC]={0};
     conversie (intreg , intregB);
-    memorareROBIG (intregB , 1 , intregB.v[0],auxiliar);
-    strcpy (sir_caractere + strlen (sir_caractere) , auxiliar);
+    memorare_ro_Big (intregB , 1 , intregB.v[0],auxiliar);
+    strcat(sir_caractere , auxiliar);
     if ( fractionarB.v[0] ) {
-        char auxiliar2[MAX_VEC];
-        for ( int i = 0; i < MAX_VEC; i++ ) auxiliar2[i] = NULL;
-        //fout << "virgula ";
-        strcpy (sir_caractere + strlen (sir_caractere) , "virgula ");
-        memorareROBIG (fractionarB , 1 , fractionarB.v[0],auxiliar2);
-        strcpy (sir_caractere + strlen (sir_caractere) , auxiliar2);
+        char auxiliar2[MAX_VEC]={0};
+        strcat(sir_caractere , "virgula ");
+        memorare_ro_Big (fractionarB , 1 , fractionarB.v[0],auxiliar2);
+        strcat(sir_caractere , auxiliar2);
     }
 }
 
 //Traduce un vector de BigInt in limba romana (vecotrul trebuie sa aiba forma prefixata)
-void afisareROsirBIG (BigInt vector[] , int lungime) {
+void afisare_ro_sir_Big (BigInt vector[] , int lungime) {
     int ultima_operatie = 5 , penultima_operatie = 6;
     bool impartire = 0;
     for ( int i = lungime; i > 0; i-- ) {
@@ -1013,13 +992,13 @@ void afisareROsirBIG (BigInt vector[] , int lungime) {
         }
         else {                                                                      //numar
             if ( i != 1 ) {
-                afisareROBIG (vector[i] , 1 , vector[i].v[0]);
+                afisare_ro_Big (vector[i] , 1 , vector[i].v[0]);
                 if ( impartire == 0 ) {
                     if ( vector[i - 1].operatie != ultima_operatie ) fout << "si ";
                     else fout << ',';
                 }
             }
-            else afisareROBIG (vector[i] , 1 , vector[i].v[0]);
+            else afisare_ro_Big (vector[i] , 1 , vector[i].v[0]);
             if ( impartire ) {
                 fout << "impartit la ";
             }
@@ -1028,7 +1007,7 @@ void afisareROsirBIG (BigInt vector[] , int lungime) {
     }
 }
 //Traduce un vector de BigInt in limba romana si il pune intr-un sir de caractere (vecotrul trebuie sa aiba forma prefixata)
-void memorareROsirBIG (BigInt vector[] , int lungime,char sir_caractere[]) {
+void memorare_ro_sir_Big (BigInt vector[] , int lungime,char sir_caractere[]) {
     int ultima_operatie = 5 , penultima_operatie = 6;
     bool impartire = 0;
     for ( int i = lungime; i > 0; i-- ) {
@@ -1038,7 +1017,7 @@ void memorareROsirBIG (BigInt vector[] , int lungime,char sir_caractere[]) {
                 ultima_operatie = 1;
                 if ( ultima_operatie == penultima_operatie );
                 else {
-                    strcpy (sir_caractere + strlen (sir_caractere) ,"suma dintre " );
+                    strcat(sir_caractere ,"suma dintre " );
                 }
             }
             else if ( vector[i].operatie == 2 ) {
@@ -1046,7 +1025,7 @@ void memorareROsirBIG (BigInt vector[] , int lungime,char sir_caractere[]) {
                 ultima_operatie = 2;
                 if ( ultima_operatie == penultima_operatie );
                 else {
-                    strcpy (sir_caractere + strlen (sir_caractere) ,"diferenta dintre " );
+                    strcat(sir_caractere ,"diferenta dintre " );
                 }
             }
             else if ( vector[i].operatie == 3 ) {
@@ -1054,7 +1033,7 @@ void memorareROsirBIG (BigInt vector[] , int lungime,char sir_caractere[]) {
                 ultima_operatie = 3;
                 if ( ultima_operatie == penultima_operatie );
                 else {
-                    strcpy (sir_caractere + strlen (sir_caractere) ,"produsul dintre ");
+                    strcat(sir_caractere ,"produsul dintre ");
                 }
             }
             else if ( vector[i].operatie == 4 ) {
@@ -1065,27 +1044,25 @@ void memorareROsirBIG (BigInt vector[] , int lungime,char sir_caractere[]) {
         }
         else {                                                                      //numar
             if ( i != 1 ) {
-                char aux[MAX_VEC];
-                for ( int j = 0; j < MAX_VEC; j++ ) aux[j] = NULL;
-                memorareROBIG (vector[i] , 1 , vector[i].v[0],aux);
-                strcpy (sir_caractere + strlen (sir_caractere) ,aux );
+                char aux[MAX_VEC]={0};
+                memorare_ro_Big (vector[i] , 1 , vector[i].v[0],aux);
+                strcat(sir_caractere ,aux );
                 if ( impartire == 0 ) {
                     if ( vector[i - 1].operatie != ultima_operatie ) {
-                        strcpy (sir_caractere + strlen (sir_caractere) ,"si ");
+                        strcat(sir_caractere ,"si ");
                     }
                     else {
-                        strcpy (sir_caractere + strlen (sir_caractere) ,",");
+                        strcat(sir_caractere ,",");
                     }
                 }
             }
             else {
-                char aux[MAX_VEC];
-                for ( int j = 0; j < MAX_VEC; j++ ) aux[j] = NULL;
-                memorareROBIG (vector[i] , 1 , vector[i].v[0] , aux);
-                strcpy (sir_caractere + strlen (sir_caractere) , aux);
+                char aux[MAX_VEC]={0};
+                memorare_ro_Big (vector[i] , 1 , vector[i].v[0] , aux);
+                strcat(sir_caractere , aux);
             }
             if ( impartire ) {
-                strcpy (sir_caractere + strlen (sir_caractere) , "impartit la ");
+                strcat(sir_caractere , "impartit la ");
             }
             impartire = 0;
         }
@@ -1093,7 +1070,7 @@ void memorareROsirBIG (BigInt vector[] , int lungime,char sir_caractere[]) {
 }
 
 //Traduce un vector de Real in limba romana (vecotrul trebuie sa aiba forma prefixata)
-void afisareROsirREAL (Real vector[] , int lungime) {
+void afisare_ro_sir_Real (Real vector[] , int lungime) {
     int ultima_operatie = 5 , penultima_operatie = 6;
     bool impartire = 0;
     for ( int i = lungime; i > 0; i-- ) {
@@ -1128,13 +1105,13 @@ void afisareROsirREAL (Real vector[] , int lungime) {
         }
         else {                                                                      //numar
             if ( i != 1 ) {
-                afisareROREAL (vector[i]);
+                afisare_ro_Real (vector[i]);
                 if ( impartire == 0 ) {
                     if ( vector[i - 1].operatie != ultima_operatie ) fout << "si ";
                     else fout << ',';
                 }
             }
-            else afisareROREAL (vector[i]);
+            else afisare_ro_Real (vector[i]);
             if ( impartire ) {
                 fout << "impartit la ";
             }
@@ -1143,7 +1120,7 @@ void afisareROsirREAL (Real vector[] , int lungime) {
     }
 }
 //Traduce un vector de Real in limba romana si il pune intr-un sir de caractere (vecotrul trebuie sa aiba forma prefixata)
-void memorareROsirREAL (Real vector[] , int lungime , char sir_caractere[]) {
+void memorare_ro_sir_Real (Real vector[] , int lungime , char sir_caractere[]) {
     int ultima_operatie = 5 , penultima_operatie = 6;
     bool impartire = 0;
     for ( int i = lungime; i > 0; i-- ) {
@@ -1153,7 +1130,7 @@ void memorareROsirREAL (Real vector[] , int lungime , char sir_caractere[]) {
                 ultima_operatie = 1;
                 if ( ultima_operatie == penultima_operatie );
                 else {
-                    strcpy (sir_caractere + strlen (sir_caractere) , "suma dintre ");
+                    strcat(sir_caractere , "suma dintre ");
                 }
             }
             else if ( vector[i].operatie == 2 ) {
@@ -1162,7 +1139,7 @@ void memorareROsirREAL (Real vector[] , int lungime , char sir_caractere[]) {
                 ultima_operatie = 2;
                 if ( ultima_operatie == penultima_operatie );
                 else {
-                    strcpy (sir_caractere + strlen (sir_caractere) , "diferenta dintre ");
+                    strcat(sir_caractere , "diferenta dintre ");
                 }
             }
             else if ( vector[i].operatie == 3 ) {
@@ -1170,7 +1147,7 @@ void memorareROsirREAL (Real vector[] , int lungime , char sir_caractere[]) {
                 ultima_operatie = 3;
                 if ( ultima_operatie == penultima_operatie );
                 else {
-                    strcpy (sir_caractere + strlen (sir_caractere) , "produsul dintre ");
+                    strcat(sir_caractere , "produsul dintre ");
                 }
             }
             else if ( vector[i].operatie == 4 ) {
@@ -1181,23 +1158,21 @@ void memorareROsirREAL (Real vector[] , int lungime , char sir_caractere[]) {
         }
         else {                                                                      //numar
             if ( i != 1 ) {
-                char auxiliar[MAX_VEC];
-                for ( int j = 0; j < MAX_VEC; j++ ) auxiliar[j] = NULL;
-                memorareROREAL (vector[i],auxiliar);
-                strcpy (sir_caractere + strlen (sir_caractere) , auxiliar);
+                char auxiliar[MAX_VEC]={0};
+                memorare_ro_Real (vector[i],auxiliar);
+                strcat(sir_caractere , auxiliar);
                 if ( impartire == 0 ) {
-                    if ( vector[i - 1].operatie != ultima_operatie ) strcpy (sir_caractere + strlen (sir_caractere) , "si ");
-                    else strcpy (sir_caractere + strlen (sir_caractere) , ",");
+                    if ( vector[i - 1].operatie != ultima_operatie ) strcat(sir_caractere , "si ");
+                    else strcat(sir_caractere , ",");
                 }
             }
             else {
-                char auxiliar[150];
-                for ( int j = 0; j <= 149; j++ ) auxiliar[j] = NULL;
-                memorareROREAL (vector[i] , auxiliar);
-                strcpy (sir_caractere + strlen (sir_caractere) , auxiliar);
+                char auxiliar[MAX_VEC];
+                memorare_ro_Real (vector[i] , auxiliar);
+                strcat(sir_caractere , auxiliar);
             }
             if ( impartire ) {
-                strcpy (sir_caractere + strlen (sir_caractere) , "impartit la ");
+                strcat(sir_caractere , "impartit la ");
             }
             impartire = 0;
         }
@@ -1206,16 +1181,16 @@ void memorareROsirREAL (Real vector[] , int lungime , char sir_caractere[]) {
 
 
 // Calculeaza suma a doua BigInt
-void adunareBIG (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat) {
+void adunare_Big (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat) {
     if ( numar1.semn > numar2.semn ) {                          //(-a) + b = b - a
         numar1.semn = 0;
-        scadereBIG (numar2 , numar1 , rezultat);
+        scadere_Big (numar2 , numar1 , rezultat);
         numar1.semn = 1;
         return;
     }
     else if ( numar1.semn < numar2.semn ) {                     //a + (-b) = a - b
         numar2.semn = 0;
-        scadereBIG (numar1 , numar2 , rezultat);
+        scadere_Big (numar1 , numar2 , rezultat);
         numar2.semn = 1;
         return;
     }
@@ -1247,20 +1222,20 @@ void adunareBIG (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat) {
         }
         else rezultat.v[0] = numar1.v[0];
     }
-    else adunareBIG (numar2 , numar1 , rezultat);
+    else adunare_Big (numar2 , numar1 , rezultat);
 }
 
 // Calculeaza diferenta a doua BigInt
-void scadereBIG (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat) {
+void scadere_Big (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat) {
     if ( numar1.semn < numar2.semn ) {               // a - (-b) = a + b
         numar2.semn = 0;
-        adunareBIG (numar1 , numar2 , rezultat);
+        adunare_Big (numar1 , numar2 , rezultat);
         numar2.semn = 1;
         return;
     }
     else if ( numar1.semn > numar2.semn ) {         // (-a) - b = -(a + b)
         numar1.semn = 0;
-        adunareBIG (numar1 , numar2 , rezultat);
+        adunare_Big (numar1 , numar2 , rezultat);
         numar1.semn = 1;
         rezultat.semn = 1;
         return;
@@ -1268,29 +1243,29 @@ void scadereBIG (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat) {
     else if ( numar1.semn ) {                     // (-a) - (-b) = b - a
         numar2.semn = 0;
         numar1.semn = 0;
-        scadereBIG (numar2 , numar1 , rezultat);
+        scadere_Big (numar2 , numar1 , rezultat);
         numar2.semn = 1;
         numar1.semn = 1;
         return;
     }                                            // a - b = a - b
-    if ( numar2.v[0] > numar1.v[0] ) scaderesecundaraBIG (numar2 , numar1 , rezultat , 1); //b>a
+    if ( numar2.v[0] > numar1.v[0] ) scadere_secundara_Big (numar2 , numar1 , rezultat , 1); //b>a
     else if ( numar1.v[0] == numar2.v[0] ) {
         int ok = 0;
         for ( int i = 1; i <= numar1.v[0]; i++ ) {
             if ( numar1.v[i] > numar2.v[i] ) {
-                scaderesecundaraBIG (numar1 , numar2 , rezultat , 0);                           //a>b
+                scadere_secundara_Big (numar1 , numar2 , rezultat , 0);                           //a>b
                 break;
             }
             else if ( numar2.v[i] > numar1.v[i] ) {
-                scaderesecundaraBIG (numar2 , numar1 , rezultat , 1);                   //b>a
+                scadere_secundara_Big (numar2 , numar1 , rezultat , 1);                   //b>a
                 break;
             }
         }
     }
-    else scaderesecundaraBIG (numar1 , numar2 , rezultat , 0);                                //a>b
+    else scadere_secundara_Big (numar1 , numar2 , rezultat , 0);                                //a>b
 }
 // Functie secundara pentru scadere, calculeaza propiu-zis diferenta a doua numere pozitive primul avand mai multe cifre
-void scaderesecundaraBIG (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat , bool semn) {
+void scadere_secundara_Big (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat , bool semn) {
     int lungime , carry = 0 , contor_zero = 0;
     lungime = numar1.v[0] - numar2.v[0];
     for ( int i = numar2.v[0]; i >= 1; i-- ) {
@@ -1319,19 +1294,19 @@ void scaderesecundaraBIG (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat , b
 }
 
 //Inumlteste doua BigInt
-void inmultireBIG (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat) {
+void inmultire_Big (BigInt& numar1 , BigInt& numar2 , BigInt& rezultat) {
     BigInt rezultat_auxiliar;
     for ( int i = 1; i <= numar2.v[0]; i++ ) {
         BigInt aux;
-        inmultiresBIG (numar1 , numar2.v[( numar2.v[0] - i + 1 )] , aux , i - 1);
-        adunareBIG (rezultat , aux , rezultat_auxiliar);
+        inmultire_secundara_Big (numar1 , numar2.v[( numar2.v[0] - i + 1 )] , aux , i - 1);
+        adunare_Big (rezultat , aux , rezultat_auxiliar);
         rezultat = rezultat_auxiliar;
     }
     if ( numar1.semn != numar2.semn ) rezultat.semn = 1; // a * (-b) || (-a) * b
     else rezultat.semn = 0;                             // a * b || (-a) * (-b)
 }
 //Functie secundara pentru inmultire, calculeaza produsul dintre un BigInt si o cifra si adauga un numar specificat de zerouri
-void inmultiresBIG (BigInt& numar1 , int cifra , BigInt& rezultat , int zero) {
+void inmultire_secundara_Big (BigInt& numar1 , int cifra , BigInt& rezultat , int zero) {
     if ( cifra < 0 ) {               // a * -x = -ax
         cifra = -cifra;
         rezultat.semn = 1;
@@ -1356,7 +1331,7 @@ void inmultiresBIG (BigInt& numar1 , int cifra , BigInt& rezultat , int zero) {
 }
 
 //Calculeaza catul impartirii naturale a doua BigInt
-void impartireBIG (BigInt deimpartit , BigInt impartitor , BigInt& cat) {
+void impartire_Big (BigInt deimpartit , BigInt impartitor , BigInt& cat) {
     if ( impartitor.v[0] == 0 ) {
         eroare=1;
         return;
@@ -1366,8 +1341,8 @@ void impartireBIG (BigInt deimpartit , BigInt impartitor , BigInt& cat) {
     adunare_cat.v[1] = 1;
     while ( putere > 0 ) {
         BigInt auxiliar_suma;
-        adunareBIG (suma , impartitor , auxiliar_suma);
-        if ( maimareBIG (auxiliar_suma , deimpartit) ) {
+        adunare_Big (suma , impartitor , auxiliar_suma);
+        if ( mai_mare_Big (auxiliar_suma , deimpartit) ) {
             putere--;
             impartitor.v[0]--;
             preamare = 0;
@@ -1376,7 +1351,7 @@ void impartireBIG (BigInt deimpartit , BigInt impartitor , BigInt& cat) {
             suma = auxiliar_suma;
             BigInt auxiliar_cat;
             adunare_cat.v[0] = putere;
-            adunareBIG (cat_auxiliar , adunare_cat , auxiliar_cat);
+            adunare_Big (cat_auxiliar , adunare_cat , auxiliar_cat);
             cat_auxiliar = auxiliar_cat;
             if ( preamare ) {
                 putere++;
@@ -1388,7 +1363,7 @@ void impartireBIG (BigInt deimpartit , BigInt impartitor , BigInt& cat) {
 }
 
 //Imparte un BigInt la o cifra  (nefolosit)
-void impartiresBIG (BigInt& nr1 , int x , BigInt& nr2) {
+void impartire_secundara_Big (BigInt& nr1 , int x , BigInt& nr2) {
     int div = 0 , poz = 1;
     if ( nr1.semn == 0 && x < 0 ) nr2.semn = 1;
     else if ( nr1.semn == 1 && x > 0 ) nr2.semn = 1;
@@ -1415,21 +1390,21 @@ void impartiresBIG (BigInt& nr1 , int x , BigInt& nr2) {
 
 
 //Calculeaza prioritate operatorilor pentru conversia postfixata
-int prioBIG (BigInt Operator) {
+int prio_Big (BigInt Operator) {
     if ( Operator.operatie == 1 || Operator.operatie == 2 ) return 2; // + || -
     if ( Operator.operatie == 3 || Operator.operatie == 4 ) return 3; // * || /
     if ( Operator.operatie == 6 || Operator.operatie == 7 ) return 4; // ( || )
     return 0;
 }
 //Calculeaza prioritate operatorilor pentru conversia postfixata
-int prioREAL (Real nr) {
+int prio_Real (Real nr) {
     if ( nr.operatie == 1 || nr.operatie == 2 ) return 2; // + || -
     if ( nr.operatie == 3 || nr.operatie == 4 ) return 3; // * || /
     if ( nr.operatie == 6 || nr.operatie == 7 ) return 4; // ( || )
     return 0;
 }
 //Transforma vectorul 1 de BigInt cu forma infixata in vectorul 2 cu forma postfixata. Functia actualizeaza lungimea
-void infixtopostfixBIG (BigInt vector1[] , BigInt vector2[] , int& lungime) {
+void infix_to_postfix_Big (BigInt vector1[] , BigInt vector2[] , int& lungime) {
     BigInt stiva[150] , auxiliar;
     int inceput_coada1 = 1 , sfarsit_coada1 = lungime + 1 , inceput_coada2 = 1 , sfarsit_coada2 = 1 , varf_stiva = 1;
     while ( inceput_coada1 < sfarsit_coada1 ) {
@@ -1447,7 +1422,7 @@ void infixtopostfixBIG (BigInt vector1[] , BigInt vector2[] , int& lungime) {
                 lungime -= 2;
             }
             else {
-                while ( varf_stiva > 1 && stiva[varf_stiva].operatie != 6 && ( prioBIG (stiva[varf_stiva]) >= prioBIG (auxiliar) ) ) {
+                while ( varf_stiva > 1 && stiva[varf_stiva].operatie != 6 && ( prio_Big (stiva[varf_stiva]) >= prio_Big (auxiliar) ) ) {
                     vector2[sfarsit_coada2++] = stiva[varf_stiva];
                     varf_stiva--;
                 }
@@ -1462,7 +1437,7 @@ void infixtopostfixBIG (BigInt vector1[] , BigInt vector2[] , int& lungime) {
     }
 }
 //Transforma vectorul 1 de Real cu forma infixata in vectorul 2 cu forma postfixata. Functia actualizeaza lungimea
-void infixtopostfixREAL (Real vector1[] , Real vector2[] , int& lungime) {
+void infix_to_postfix_Real (Real vector1[] , Real vector2[] , int& lungime) {
     Real stiva[150] , auxiliar;
     int inceput_coada1 = 1 , sfarsit_coada1 = lungime + 1 , inceput_coada2 = 1 , sfarsit_coada2 = 1 , varf_stiva = 1;
     while ( inceput_coada1 < sfarsit_coada1 ) {
@@ -1480,7 +1455,7 @@ void infixtopostfixREAL (Real vector1[] , Real vector2[] , int& lungime) {
                 lungime -= 2;
             }
             else {
-                while ( varf_stiva > 1 && stiva[varf_stiva].operatie != 6 && ( prioREAL (stiva[varf_stiva]) >= prioREAL (auxiliar) ) ) {
+                while ( varf_stiva > 1 && stiva[varf_stiva].operatie != 6 && ( prio_Real (stiva[varf_stiva]) >= prio_Real (auxiliar) ) ) {
                     vector2[sfarsit_coada2++] = stiva[varf_stiva];
                     varf_stiva--;
                 }
@@ -1496,8 +1471,8 @@ void infixtopostfixREAL (Real vector1[] , Real vector2[] , int& lungime) {
 }
 
 //Evalueaza o expresie postfixata si returneaza rezultatul
-BigInt evalpostfixBIG (BigInt vector[] , int lungime) {
-    BigInt stiva[100] , auxiliar , operand_stanga , operand_dreapta;
+BigInt eval_postfix_Big (BigInt vector[] , int lungime) {
+    BigInt stiva[150] , auxiliar , operand_stanga , operand_dreapta;
     int varf_stiva = 0 , inceput_coada = 1;
     while ( inceput_coada <= lungime ) {
         auxiliar = vector[inceput_coada]; inceput_coada++;
@@ -1509,10 +1484,10 @@ BigInt evalpostfixBIG (BigInt vector[] , int lungime) {
             BigInt val;
             operand_dreapta = stiva[varf_stiva]; varf_stiva--;
             operand_stanga = stiva[varf_stiva]; varf_stiva--;
-            if ( auxiliar.operatie == 1 ) adunareBIG (operand_stanga , operand_dreapta , val);
-            else if ( auxiliar.operatie == 2 ) scadereBIG (operand_stanga , operand_dreapta , val);
-            else if ( auxiliar.operatie == 3 ) inmultireBIG (operand_stanga , operand_dreapta , val);
-            else if ( auxiliar.operatie == 4 ) impartireBIG (operand_stanga , operand_dreapta , val);
+            if ( auxiliar.operatie == 1 ) adunare_Big (operand_stanga , operand_dreapta , val);
+            else if ( auxiliar.operatie == 2 ) scadere_Big (operand_stanga , operand_dreapta , val);
+            else if ( auxiliar.operatie == 3 ) inmultire_Big (operand_stanga , operand_dreapta , val);
+            else if ( auxiliar.operatie == 4 ) impartire_Big (operand_stanga , operand_dreapta , val);
             varf_stiva++;
             stiva[varf_stiva] = val;
         }
@@ -1520,7 +1495,7 @@ BigInt evalpostfixBIG (BigInt vector[] , int lungime) {
     return stiva[1];
 }
 //Evalueaza o expresie postfixata si returneaza rezultatul
-Real evalpostfixREAL (Real vector[] , int lungime) {
+Real eval_postfix_Real (Real vector[] , int lungime) {
     Real stiva[100] , auxiliar , operand_stanga , operand_dreapta;
     int varf_stiva = 0 , inceput_coada = 1;
     while ( inceput_coada <= lungime ) {
@@ -1544,14 +1519,14 @@ Real evalpostfixREAL (Real vector[] , int lungime) {
 }
 
 //Transforma vectorul 1 de BigInt cu forma infixata in vectorul 2 cu forma prefixata
-void infixtoprefixBIG (BigInt vector1[] , BigInt vector2[] , int& lungime) {
+void infix_to_prefix_Big (BigInt vector1[] , BigInt vector2[] , int& lungime) {
     BigInt stiva[100];
     for ( int i = 1; i <= lungime; i++ ) {
         if ( vector1[i].operatie == 6 ) vector1[i].operatie = 7;
         else if ( vector1[i].operatie == 7 ) vector1[i].operatie = 6;
         stiva[lungime + 1 - i] = vector1[i];
     }
-    infixtopostfixBIG (stiva , vector2 , lungime);
+    infix_to_postfix_Big (stiva , vector2 , lungime);
     for ( int i = 1; i <= lungime; i++ ) {
         if ( vector1[i].operatie == 6 ) vector1[i].operatie = 7;
         if ( vector1[i].operatie == 7 ) vector1[i].operatie = 6;
@@ -1561,14 +1536,14 @@ void infixtoprefixBIG (BigInt vector1[] , BigInt vector2[] , int& lungime) {
     }
 }
 //Transforma vectorul 1 de Real cu forma infixata in vectorul 2 cu forma prefixata
-void infixtoprefixREAL (Real vector1[] , Real vector2[] , int& lungime) {
+void infix_to_prefix_Real (Real vector1[] , Real vector2[] , int& lungime) {
     Real stiva[100];
     for ( int i = 1; i <= lungime; i++ ) {
         if ( vector1[i].operatie == 6 ) vector1[i].operatie = 7;
         else if ( vector1[i].operatie == 7 ) vector1[i].operatie = 6;
         stiva[lungime + 1 - i] = vector1[i];
     }
-    infixtopostfixREAL (stiva , vector2 , lungime);
+    infix_to_postfix_Real (stiva , vector2 , lungime);
     for ( int i = 1; i <= lungime; i++ ) {
         if ( vector1[i].operatie == 6 ) vector1[i].operatie = 7;
         if ( vector1[i].operatie == 7 ) vector1[i].operatie = 6;
@@ -1578,6 +1553,7 @@ void infixtoprefixREAL (Real vector1[] , Real vector2[] , int& lungime) {
     }
 }
 
+//Verifica corectitudinea unei expresii matematice
 void evaluare (char sir_caractere[]) {
 	bool este_operand = 0;
 	int numar_paranteze = 0,numar_cifre=0;
@@ -1590,7 +1566,7 @@ void evaluare (char sir_caractere[]) {
                 return;
 			}
 		}
-		else if ( sir_caractere[i] == (char)43 || sir_caractere[i] == 45 || sir_caractere[i] == 42 || sir_caractere[i] == 120 || sir_caractere[i] == 47 || sir_caractere[i] == 58 ) {
+		else if ( sir_caractere[i] == '+' || sir_caractere[i] == '-' || sir_caractere[i] == '*' || sir_caractere[i] == 'x' || sir_caractere[i] == '/' || sir_caractere[i] == ':' ) {
             numar_cifre=0;
 			if ( este_operand == 0 ) {
 				eroare = 3;
@@ -1598,14 +1574,14 @@ void evaluare (char sir_caractere[]) {
 			}
 			este_operand = 0;
 		}
-		else if ( sir_caractere[i] == 40 ) {
+		else if ( sir_caractere[i] == '(' ) {
 			if ( este_operand ) {
 				eroare = 4;
 				return;
 			}
 			numar_paranteze++;
 		}
-		else if ( sir_caractere[i] == 41 ) {
+		else if ( sir_caractere[i] == ')' ) {
 			if ( este_operand == 0 ) {
 				eroare = 5;
 				return;
@@ -1969,16 +1945,10 @@ char* evaluatorBig(char vecCuv[5000][10000])//Calculeaza ecuatia pentru numere i
     strcpy(rez,s[1]);
     return rez;
 }
+
 int main()
 {
     meniu1();
     closegraph();
-    /*char a[1000];
-    fin.getline(a, 100);
-    introdVec(a);
-    fout<<endl<<evaluatorBig(vecCuv);
-    */
-
     return 0;
 }
-
