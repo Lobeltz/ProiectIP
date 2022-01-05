@@ -128,7 +128,9 @@ void meniuCifZec();
     while(kbhit())getch();
     while(caracter!=13 || caracter!=27){
         if(caracter==13){       //enter
-            //pune codul tau aici; sirul de caractere va fi salvat in variabila String[]
+           settextstyle(1,HORIZ_DIR,2);//enter
+            introdVec(String);
+            outtextxy(100,500,evaluatorBig(vecCuv)); //pune codul tau aici; sirul de caractere va fi salvat in variabila String[]
 
 
             break;
@@ -171,7 +173,10 @@ void meniuLitZec()
     while(kbhit())getch();
     while(caracter!=13 || caracter!=27){
         if(caracter==13){       //enter
-            //pune codul tau aici; sirul de caractere va fi salvat in variabila String[]
+            settextstyle(1,HORIZ_DIR,2);
+            introdVec(String);
+            outtextxy(100,500,evaluatorLit(vecCuv));
+		//pune codul tau aici; sirul de caractere va fi salvat in variabila String[]
 
 
             break;
