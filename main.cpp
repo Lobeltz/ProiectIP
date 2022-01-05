@@ -5,6 +5,7 @@
 #include <cmath>
 #include <graphics.h>
 #include <winbgim.h>
+#include<stack>
 #define MAX_VEC 5000
 using namespace std;
 
@@ -17,7 +18,7 @@ struct BigInt { //Numere mari
     int operatie = 0;
 };
 BigInt N1,N2,N3,v1[100],v2[100],v3[100];
-
+int k;
 struct Real {   //Numere reale
     double n = 0;
     int operatie = 0;
@@ -31,9 +32,9 @@ char sir_cifre_mari[50][20] = { "unu","doi","trei","patru","cinci","sase","sapte
                             "catralioane","un cvintilion","cvintilioane","un sextilion","sextilioane" };
 char sir_operatori[10] = { '`','+','-' ,'*' ,'/' ,'=' ,'(' ,')' };
 char caractere_valide_cifre[20]={'1','2','3','4','5','6','7','8','9','0','+','-','*','x','/',':','(',')',' '};
-char caractere_valide_litere[200]={"abcdefghijklmnopqrstuvwxyz _"};
+char caractere_valide_litere[200]={"abcdefghijklmnopqrstuvwxyz _,"};
 
-char cuvInutile[100][100] = {"Care", "Ce", "Cat","Cum", "este", "sunt", "rezultatul","egal", "cu", "lui", "?", "dintre"},
+char cuvInutile[100][100] = {"Care", "Ce", "Cat","Cum", "este", "sunt", "rezultatul","egal", "cu", "lui", "?", "dintre", "la"},
                             cuvInm[10][20] = {"inmultire", "inmultirii", "inmultirea", "produs", "produsul", "produsului"},
                                     cuvAdun[10][20] = {"suma", "sumei", "adunare", "adunarea", "adunarii"},
                                             cuvScad[10][20] = {"scadere", "scaderii","scaderea", "diferenta", "diferentei"},
@@ -53,7 +54,8 @@ char vecCuv[5000][10000],rez[1000];
 
 char* transfLitCif(char *s);
 void introdVec(char *s);
-char* evaluator(char vecCuv[5000][10000]);
+char* evaluatorLit(char vecCuv[5000][10000]);
+char* evaluatorBig(char vecCuv[5000][10000]);
 
 void conversie (long long int x , BigInt& nr);// converteste un int in BigInt
 void addlBIG (BigInt& nr , int x);// Adauga cifra x la stanga numarului
@@ -106,12 +108,6 @@ void meniuCifBig();
 void meniuCifZec();
 
 
- int main(){
-    meniu1();
-    closegraph();
-
-    return 0;
- }
 
 
  void meniuLitBig()
@@ -127,12 +123,16 @@ void meniuCifZec();
 
     while(kbhit())getch();
     while(caracter!=13 || caracter!=27){
-        if(caracter==13){       //enter
-           settextstyle(1,HORIZ_DIR,2);//enter
+        if(caracter==13){
+            settextstyle(1,HORIZ_DIR,2);//enter
             introdVec(String);
-            outtextxy(100,500,evaluatorBig(vecCuv)); //pune codul tau aici; sirul de caractere va fi salvat in variabila String[]
-
-
+            BigInt numar;
+            char sir[1000]={0},sir2[1000]={0};
+            strcpy(sir,evaluatorBig(vecCuv));
+            for(int i=0;i<strlen(sir);i++)
+                addrBIG(numar,sir[i]-'0');
+            memorareROBIG(numar,1,numar.v[0],sir2);
+            outtextxy(100,500,sir2);
             break;
         }
         if(caracter==27){       //escape
@@ -176,9 +176,26 @@ void meniuLitZec()
             settextstyle(1,HORIZ_DIR,2);
             introdVec(String);
             outtextxy(100,500,evaluatorLit(vecCuv));
-		//pune codul tau aici; sirul de caractere va fi salvat in variabila String[]
+            BigInt numar,numar2;
+            char sir1[1000]={0},sir2[1000]={0},sir3[1000]={0};
+            strcpy(sir1,evaluatorLit(vecCuv));
+            int i;
+            for(i=0;i<strlen(sir1) && sir1[i]!='.';i++)
+                addrBIG(numar,sir1[i]-'0');
+            memorareROBIG(numar,1,numar.v[0],sir2);
 
+            if(strchr(sir1,'.')!=0)
+            {
+                i++;
+                for(;i<strlen(sir1);i++)
+                    addrBIG(numar2,sir1[i]-'0');
+                memorareROBIG(numar2,1,numar2.v[0],sir3);
+                strcat(sir2," virgula ");strcat(sir2,sir3);
+            }
 
+            char sir4[1000]="este ";
+            strcat(sir4,sir2);
+            outtextxy(100,500,sir4);
             break;
         }
         if(caracter==27){       //escape
@@ -205,7 +222,8 @@ void meniuLitZec()
     eroare=0;
     meniuZecim();
 }
-void meniuCifBig(){
+void meniuCifBig()
+{
     settextstyle(1,HORIZ_DIR,5);
     cleardevice();
     readimagefile("back.jpg",900,800,1020,920);
@@ -277,7 +295,6 @@ void meniuCifBig(){
         clearBIG(v3[i]);
     }
     eroare=0;
-
     meniuBig();
 }
 void meniuCifZec(){
@@ -1609,7 +1626,7 @@ void evaluare (char sir_caractere[]) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
+
 char* transfLitCif(char *s) // Transforma numarul scris in litere in cifre
 {
     int i = 0;
@@ -1679,14 +1696,12 @@ int eCuvInutil(char s[]) //verifica daca e cuvant inutil
     }
     return 0;
 }
-
 int eSi(char *s)
 {
     if (strcmp(s, "si") == 0)
         return 1;
     return 0;
 }
-
 int eAdun(char *s)
 {
     int i = 0;
@@ -1698,7 +1713,6 @@ int eAdun(char *s)
     }
     return 0;
 }
-
 int eScad(char *s)
 {
     int i = 0;
@@ -1710,7 +1724,6 @@ int eScad(char *s)
     }
     return 0;
 }
-
 int eInm(char *s)
 {
     int i = 0;
@@ -1722,7 +1735,6 @@ int eInm(char *s)
     }
     return 0;
 }
-
 int eImp(char *s)
 {
     int i = 0;
@@ -1734,7 +1746,6 @@ int eImp(char *s)
     }
     return 0;
 }
-
 void introdVec(char *s) // Introduce in vector operatorii si operanzii si introduce ')' la finalul domeniului fiecarui operator
 {
     int i;
@@ -1827,7 +1838,6 @@ char* evaluatorLit(char vecCuv[5000][10000]) // Calculeaza ecuatia din vectorul 
             op.push('/');
         else if(vecCuv[i][0]=='-')
             op.push('-');
-
         strcpy(s[++v],vecCuv[i]);
         if(s[v][0]==')')
         {
@@ -1882,9 +1892,9 @@ char* evaluatorLit(char vecCuv[5000][10000]) // Calculeaza ecuatia din vectorul 
             }
         }
     }
-    strcpy(rez,s[1]);
+    strcpy(rez,s[1]);// Practic am calculat pe baza unei stive si am tot continuat pana cand rezultatul final se afla pe prima pozitie
     int ok=0,i;
-    for(i=strlen(rez)-1;i>=0 && rez[i]!='.';i--)
+    for(i=strlen(rez)-1;i>=0 && rez[i]!='.';i--)//pentru a nu avea cazuri de felul 5.00000, ci 5 sau 2.760200, ci 2.7602, eliminam 0-urile
             if(rez[i]!='0')
             {
                 ok=1;
@@ -1892,7 +1902,7 @@ char* evaluatorLit(char vecCuv[5000][10000]) // Calculeaza ecuatia din vectorul 
             }
             else
                 strcpy(rez+i,rez+i+1);
-    if(!ok)strcpy(rez+i,rez+i+1);
+    if(!ok)strcpy(rez+i,rez+i+1);//daca nu s-a gasit alta cifre in afara de 0 in dreapta virgulei, eliminam virgula
     return rez;
 }
 char* evaluatorBig(char vecCuv[5000][10000])//Calculeaza ecuatia pentru numere in big int
@@ -1910,7 +1920,6 @@ char* evaluatorBig(char vecCuv[5000][10000])//Calculeaza ecuatia pentru numere i
             op.push('/');
         else if(vecCuv[i][0]=='-')
             op.push('-');
-
         strcpy(s[++v],vecCuv[i]);
         if(s[v][0]==')')
         {
@@ -1960,5 +1969,16 @@ char* evaluatorBig(char vecCuv[5000][10000])//Calculeaza ecuatia pentru numere i
     strcpy(rez,s[1]);
     return rez;
 }
+int main()
+{
+    meniu1();
+    closegraph();
+    /*char a[1000];
+    fin.getline(a, 100);
+    introdVec(a);
+    fout<<endl<<evaluatorBig(vecCuv);
+    */
 
-*/
+    return 0;
+}
+
