@@ -233,6 +233,9 @@ void meniuCifBig(){
             // DE EDITAT SIRUL ESTE IN sir_complet
             outtextxy(100,500,sir_complet);
 
+            for (int i=0;i<=199;i++) sir_auxiliar[i]=NULL;
+            for (int i=0;i<=249;i++) sir_complet[i]=NULL;
+
             break;
         }
         if(caracter==27){       //escape
@@ -295,6 +298,10 @@ void meniuCifZec(){
 
             // DE EDITAT SIRUL ESTE IN sir_complet
             outtextxy(100,500,sir_complet);
+
+            for (int i=0;i<=199;i++) sir_auxiliar[i]=NULL;
+            for (int i=0;i<=249;i++) sir_complet[i]=NULL;
+
             break;
         }
         if(caracter==27){       //escape
@@ -1526,7 +1533,7 @@ void infixtoprefixREAL (Real vector1[] , Real vector2[] , int& lungime) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 char* transfLitCif(char *s) // Transforma numarul scris in litere in cifre
 {
     int i = 0;
@@ -1813,3 +1820,5 @@ char* evaluator(char vecCuv[5000][10000]) // Calculeaza ecuatia din vectorul de 
     return rez;
 }
 
+
+*/
