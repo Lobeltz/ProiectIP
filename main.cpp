@@ -1807,7 +1807,7 @@ void introdVec(char *s) // Introduce in vector operatorii si operanzii si introd
         k++;
     }
 }
-char* evaluator(char vecCuv[5000][10000]) // Calculeaza ecuatia din vectorul de mai sus (PENTRU NUMERE CU VIRGULA)
+char* evaluatorLit(char vecCuv[5000][10000]) // Calculeaza ecuatia din vectorul de mai sus (PENTRU NUMERE CU VIRGULA)
 {
     char s[100][100],buffer[100];
     int v = 0;
@@ -1890,6 +1890,70 @@ char* evaluator(char vecCuv[5000][10000]) // Calculeaza ecuatia din vectorul de 
     if(!ok)strcpy(rez+i,rez+i+1);
     return rez;
 }
+char* evaluatorBig(char vecCuv[5000][10000])//Calculeaza ecuatia pentru numere in big int
+{
+    char s[1000][100];
+    int v = 0;
+    stack<char> op;
+    for(int i=0;i<k;i++)
+    {
+        if(vecCuv[i][0]=='*')
+            op.push('*');
+        else if(vecCuv[i][0]=='+')
+            op.push('+');
+        else if(vecCuv[i][0]=='/')
+            op.push('/');
+        else if(vecCuv[i][0]=='-')
+            op.push('-');
 
+        strcpy(s[++v],vecCuv[i]);
+        if(s[v][0]==')')
+        {
+            v--;
+            int r = 0;
+            char cOP = op.top();
+            op.pop();
+            if(cOP == '*')
+            {
+                r=1;
+                while(s[v][0]!='*')
+                {
+                    r=r*(stoi(s[v],nullptr));
+                    v--;
+                }
+                strcpy(s[v],to_string(r).c_str());
+            }
+            else if(cOP=='+')
+            {
+                r=0;
+                while(s[v][0]!='+')
+                {
+                    r=r+(stoi(s[v],nullptr));
+                    v--;
+                }
+                strcpy(s[v],to_string(r).c_str());
+            }
+            else if(cOP=='-')
+            {
+                r=(stoi(s[v],nullptr));
+                v--;
+                r-=(stoi(s[v],nullptr));
+                v--;
+                r*=-1;
+                strcpy(s[v],to_string(r).c_str());
+            }
+            else if(cOP=='/')
+            {
+                r=(stoi(s[v-1],nullptr));
+                v--;
+                r/=(stoi(s[v+1],nullptr));
+                v--;
+                strcpy(s[v],to_string(r).c_str());
+            }
+        }
+    }
+    strcpy(rez,s[1]);
+    return rez;
+}
 
 */
