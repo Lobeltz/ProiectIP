@@ -108,7 +108,7 @@ void muzica(int windowS);
 void despre(int windowS);
 
 int pozitiex_text_scris = 200 , pozitiey_text_scris = 100 , pozitiex_text_afisat = 100 , pozitiey_text_afisat = 300;
-int text_style = 2 , text_size1 = 15 , text_size2 = 10;
+int text_style = 7 , text_size1 = 15 , text_size2 = 10;
 int eroare , limita_cifre = 60, limita_caractere_rand = 75;
 
 
@@ -284,21 +284,32 @@ void meniuCifBig () {
 			strcat (sir_complet , "este ");
 			strcat (sir_complet , sir_auxiliar2);
 
-			if ( eroare == 0 ){
-                // settextstyle (text_style , HORIZ_DIR , 5);
-                // outtextxy (pozitiex_text_afisat-50 , pozitiey_text_afisat-100 , sir_complet);
+			if ( eroare == 0 )
+            {
                 settextstyle (text_style , HORIZ_DIR , text_size1);
-                int pas=0;
-                for(int i=0;i<=strlen(sir_complet);i+=limita_caractere_rand+1){
-                    char sir_auxiliar_afisat[limita_caractere_rand+3]={0};
-                    int poz=0;
-                    for(int j=i;j<=i+limita_caractere_rand && j<=strlen(sir_complet);j++) {
-                        sir_auxiliar_afisat[poz]=sir_complet[j];
-                        poz++;
+                int nrc=0,i=0,j=0;
+                char temp[MAX_VEC]={0};
+                while(sir_complet[nrc+i]!='\0') // punere pe mai multe randuri
+                {
+                    if(i==80)
+                    {
+                        while(sir_complet[nrc+i]!=' ')
+                            i--;
+                        for(j=0;j<i;j++)
+                            temp[j]=sir_complet[nrc+j];
+                        nrc=nrc+i;
+                        temp[i]='\0';
+                        i=0;
+                        outtextxy(pozitiex_text_afisat,pozitiey_text_afisat+nrc,temp);
                     }
-                    pas++;
-                    outtextxy(pozitiex_text_afisat,(pozitiey_text_afisat+45*pas),sir_auxiliar_afisat);
+                    i++;
                 }
+                for(j=0;j<i;j++)
+                    temp[j]=sir_complet[nrc+j];
+                nrc=nrc+i;
+                temp[i]='\0';
+                i=0;
+                outtextxy(pozitiex_text_afisat,pozitiey_text_afisat+nrc,temp);
 			}
 			else {
 				if ( eroare == 1 ) outtextxy (pozitiex_text_afisat , pozitiey_text_afisat , "EROARE: IMPARTIRE LA 0");
@@ -385,21 +396,32 @@ void meniuCifZec () {
 			strcat (sir_complet , "este ");
 			strcat (sir_complet , sir_auxiliar2);
 
-			if ( eroare == 0 ){
-               // settextstyle (text_style , HORIZ_DIR , 5);
-                //outtextxy (pozitiex_text_afisat-50 , pozitiey_text_afisat-100 , sir_complet);
+			if ( eroare == 0 )
+            {
                 settextstyle (text_style , HORIZ_DIR , text_size1);
-                int pas=0;
-                for(int i=0;i<=strlen(sir_complet);i+=limita_caractere_rand+1){
-                    char sir_auxiliar_afisat[limita_caractere_rand+3]={0};
-                    int poz=0;
-                    for(int j=i;j<=i+limita_caractere_rand && j<=strlen(sir_complet);j++) {
-                        sir_auxiliar_afisat[poz]=sir_complet[j];
-                        poz++;
+                int nrc=0,i=0,j=0;
+                char temp[MAX_VEC]={0};
+                while(sir_complet[nrc+i]!='\0') // punere pe mai multe randuri
+                {
+                    if(i==80)
+                    {
+                        while(sir_complet[nrc+i]!=' ')
+                            i--;
+                        for(j=0;j<i;j++)
+                            temp[j]=sir_complet[nrc+j];
+                        nrc=nrc+i;
+                        temp[i]='\0';
+                        i=0;
+                        outtextxy(pozitiex_text_afisat,pozitiey_text_afisat+nrc,temp);
                     }
-                    pas++;
-                    outtextxy(pozitiex_text_afisat,(pozitiey_text_afisat+45*pas),sir_auxiliar_afisat);
+                    i++;
                 }
+                for(j=0;j<i;j++)
+                    temp[j]=sir_complet[nrc+j];
+                nrc=nrc+i;
+                temp[i]='\0';
+                i=0;
+                outtextxy(pozitiex_text_afisat,pozitiey_text_afisat+nrc,temp);
 			}
 			else {
 				if ( eroare == 1 ) outtextxy (pozitiex_text_afisat , pozitiey_text_afisat , "EROARE: IMPARTIRE LA 0");
@@ -960,7 +982,7 @@ void memorare_ro_Big (BigInt numar , int poz , int pas , char sir_caractere[]) {
 			else {
 				if ( numar.v[poz] == 2 ) {
 					strcat (sir_caractere , "doua ");
-					strcat (sir_caractere , sir_cifre_mari[pas / 3 + 28]);
+					strcat (sir_caractere , sir_cifre_mari[pas / 3 * 2 + 28]);
 					strcat (sir_caractere , " ");
 				}
 				else if ( numar.v[poz] ) {
