@@ -35,13 +35,13 @@ char sir_cifre_mari[50][20] = { "unu","doi","trei","patru","cinci","sase","sapte
                               };
 char sir_operatori[10] = { '`','+','-','*','/','=','(',')' };
 char caractere_valide_cifre[20]= {'1','2','3','4','5','6','7','8','9','0','+','-','*','x','/',':','(',')',' '};
-char caractere_valide_litere[200]= {"abcdefghijklmnopqrstuvwxyz _,"};
+char caractere_valide_litere[200]= {"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz _,?"};
 
 char cuvInutile[100][100] = {"Care","care","Ce","ce", "Cat","cat","Cum","cum", "este", "sunt", "rezultatul","egal", "cu", "lui", "?", "dintre", "la"},
                             cuvInm[10][20] = {"inmultire", "inmultirii", "inmultirea", "produs", "produsul", "produsului"},
                                     cuvAdun[10][20] = {"suma", "sumei", "adunare", "adunarea", "adunarii"},
                                             cuvScad[10][20] = {"scadere", "scaderii","scaderea", "diferenta", "diferentei"},
-                                                    cuvImp[10][20] = {"impartire", "impartirea"};
+                                                    cuvImp[10][20] = {"impartire", "impartirea","raport","raportul"};
 char num[100][100] = {"o", "un", "unu", "doi", "doua", "trei", "patru", "cinci", "sase", "sapte", "opt", "noua", "zece",
                       "unsprezece", "doisprezece", "treisprezece", "paisprezece",
                       "cincisprezece", "saisprezece", "saptesprezece", "optsprezece", "nouasprezece", "douazeci",
@@ -109,16 +109,17 @@ void meniuCifBig();
 void meniuCifZec();
 void muzica(int windowS);
 void despre(int windowS);
+void ajutor(int windowS);
 
 int pozitiex_text_scris = 200, pozitiey_text_scris = 100, pozitiex_text_afisat = 100, pozitiey_text_afisat = 300;
-int text_style = 6, text_size1 = 15, text_size2 = 6;
+int text_style = 6, text_size1 = 16, text_size2 = 16;
 int eroare, limita_cifre = 60, limita_caractere_rand = 75;
-
 
 void meniuLitBig()
 {
-    settextstyle(text_style,HORIZ_DIR,text_size1);
+    settextstyle(text_style,HORIZ_DIR,text_size1+3);
     cleardevice();
+    setcolor(15);
     readimagefile("scris.jpg",0,0,1920,1080);
     {
         char caracter,String[MAX_VEC]= {0};
@@ -142,6 +143,7 @@ void meniuLitBig()
                 memorare_ro_Big(numar,1,numar.v[0],sir2);
                 int nrc=0,i,j;
                 char temp[MAX_VEC]= {0};
+                setcolor(3);
                 while(sir2[nrc+i]!='\0') // punere pe mai multe randuri
                 {
                     if(i==40)
@@ -164,7 +166,7 @@ void meniuLitBig()
                 i=0;
                 outtextxy(pozitiex_text_afisat,pozitiey_text_afisat+nrc,temp);
 
-                //outtextxy(pozitiex_text_afisat,pozitiey_text_afisat,sir2);
+                //outtextxy(pozitiex_text_afisat,pozitiey_text_afisat,sir2); Daca nu vreau pe mai multe randuri
                 break;
             }
             if(caracter==27)        //escape
@@ -188,12 +190,11 @@ void meniuLitBig()
             char temp2[MAX_VEC]= {0};
             while(String[nrc2+i2]!='\0') //punere pe mai multe randuri
             {
-                if(i2==40)
+                if(i2==50)
                 {
 
                     while(String[nrc2+i2]!=' ')
                         i2--;
-                    if(i2<0)i2=40;
                     for(j2=0; j2<i2; j2++)
                         temp2[j2]=String[nrc2+j2];
                     nrc2=nrc2+i2;
@@ -236,6 +237,7 @@ void meniuLitZec()
 {
     settextstyle(text_style,HORIZ_DIR,text_size1);
     cleardevice();
+    setcolor(15);
     readimagefile("scris.jpg",0,0,1920,1080);
 
     {
@@ -256,16 +258,16 @@ void meniuLitZec()
                 BigInt numar,numar2;
                 char sir1[MAX_VEC]= {0},sir2[MAX_VEC]= {0},sir3[MAX_VEC]= {0};
                 strcpy(sir1,evaluatorLit(vecCuv));
-                cout<<evaluatorLit(vecCuv);
                 for(int i=0; i<strlen(sir1) && sir1[i]!='.'; i++)
                     add_right_Big(numar,sir1[i]-'0');
                 memorare_ro_Big(numar,1,numar.v[0],sir2);
                 int i=0;
                 if(strchr(sir1,'.')!=0)
                 {
-                    i++;
+                    i+=2;
                     for(; i<strlen(sir1); i++)
-                        add_right_Big(numar2,sir1[i]-'0');
+                            add_right_Big(numar2,sir1[i]-'0');
+
                     memorare_ro_Big(numar2,1,numar2.v[0],sir3);
                     strcat(sir2,"virgula ");
                     strcat(sir2,sir3);
@@ -273,11 +275,11 @@ void meniuLitZec()
 
                 char sir4[1000]="este ";
                 strcat(sir4,sir2);
-
+                cout<<endl<<sir4;
                 int nrc=0,j;
                 i=0;
                 char temp[MAX_VEC]= {0};
-
+                setcolor(3);
                 while(sir4[nrc+i]!='\0') // punere pe mai multe randuri
                 {
                     if(i==40)
@@ -312,7 +314,7 @@ void meniuLitZec()
                 readimagefile("scris.jpg",0,0,1920,1080);
                 String[sfarsit_string-1]=NULL;
                 sfarsit_string--;
-                outtextxy(pozitiex_text_scris,pozitiey_text_scris,String);//
+                outtextxy(pozitiex_text_scris,pozitiey_text_scris,String);
                 continue;
             }
             else if(strchr(caractere_valide_litere,caracter)==0) continue;
@@ -324,12 +326,10 @@ void meniuLitZec()
             char temp2[MAX_VEC]= {0};
             while(String[nrc2+i2]!='\0') //punere pe mai multe randuri
             {
-                if(i2==40)
+                if(i2==60)
                 {
-
                     while(String[nrc2+i2]!=' ')
                         i2--;
-                    if(i2<0)i2=40;
                     for(j2=0; j2<i2; j2++)
                         temp2[j2]=String[nrc2+j2];
                     nrc2=nrc2+i2;
@@ -373,6 +373,7 @@ void meniuCifBig ()
 {
     settextstyle (text_style, HORIZ_DIR, text_size1);
     cleardevice ();
+    setcolor(15);
     readimagefile ("scris.jpg", 0, 0, 1920, 1080);
 
     {
@@ -411,9 +412,10 @@ void meniuCifBig ()
                     settextstyle (text_style, HORIZ_DIR, text_size1);
                     int nrc=0,i=0,j=0;
                     char temp[MAX_VEC]= {0};
+                    setcolor(3);
                     while(sir_complet[nrc+i]!='\0') // punere pe mai multe randuri
                     {
-                        if(i==80)
+                        if(i==40)
                         {
                             while(sir_complet[nrc+i]!=' ')
                                 i--;
@@ -422,7 +424,7 @@ void meniuCifBig ()
                             nrc=nrc+i;
                             temp[i]='\0';
                             i=0;
-                            outtextxy(pozitiex_text_afisat,pozitiey_text_afisat+nrc*2,temp);
+                            outtextxy(pozitiex_text_afisat,pozitiey_text_afisat+nrc*2-100,temp);
                         }
                         i++;
                     }
@@ -431,7 +433,7 @@ void meniuCifBig ()
                     nrc=nrc+i;
                     temp[i]='\0';
                     i=0;
-                    outtextxy(pozitiex_text_afisat,pozitiey_text_afisat+nrc*2,temp);
+                    outtextxy(pozitiex_text_afisat,pozitiey_text_afisat+nrc*2+20-100,temp);
                 }
                 else
                 {
@@ -461,6 +463,7 @@ void meniuCifBig ()
             sfarsit_string++;
             if( sfarsit_string > limita_cifre )
             {
+                setcolor(3);
                 outtextxy (pozitiex_text_afisat, pozitiey_text_afisat, "EROARE: OPERATIE PREA LUNGA");
                 break;
             }
@@ -497,6 +500,7 @@ void meniuCifZec ()
 {
     settextstyle (text_style, HORIZ_DIR, text_size1);
     cleardevice ();
+    setcolor(15);
     readimagefile ("scris.jpg", 0, 0, 1920, 1080);
     {
         char caracter,String[MAX_VEC] = { 0 } ;
@@ -534,9 +538,10 @@ void meniuCifZec ()
                     settextstyle (text_style, HORIZ_DIR, text_size1);
                     int nrc=0,i=0,j=0;
                     char temp[MAX_VEC]= {0};
+                    setcolor(3);
                     while(sir_complet[nrc+i]!='\0') // punere pe mai multe randuri
                     {
-                        if(i==80)
+                        if(i==40)
                         {
                             while(sir_complet[nrc+i]!=' ')
                                 i--;
@@ -545,7 +550,7 @@ void meniuCifZec ()
                             nrc=nrc+i;
                             temp[i]='\0';
                             i=0;
-                            outtextxy(pozitiex_text_afisat,pozitiey_text_afisat+nrc*2,temp);
+                            outtextxy(pozitiex_text_afisat,pozitiey_text_afisat+nrc*2-100,temp);
                         }
                         i++;
                     }
@@ -554,7 +559,7 @@ void meniuCifZec ()
                     nrc=nrc+i;
                     temp[i]='\0';
                     i=0;
-                    outtextxy(pozitiex_text_afisat,pozitiey_text_afisat+nrc*2,temp);
+                    outtextxy(pozitiex_text_afisat,pozitiey_text_afisat+nrc*2+20-100,temp);
                 }
                 else
                 {
@@ -584,6 +589,7 @@ void meniuCifZec ()
             sfarsit_string++;
             if (sfarsit_string > limita_cifre )
             {
+                setcolor(3);
                 outtextxy (pozitiex_text_afisat, pozitiey_text_afisat, "EROARE: OPERATIE PREA LUNGA");
                 break;
             }
@@ -682,13 +688,13 @@ void meniu2()
 }
 void meniu1()
 {
-    int windowS;//xE=1232,yE=693;
+    int windowS;
     short startJoc=0;
     short x,y;
     windowS=initwindow(1920,1080,"CalcRO",true);
     settextstyle(text_style,HORIZ_DIR,text_size1);
     cleardevice();
-    readimagefile("Start1.jpg",0,0,1920,1080);
+    readimagefile("Start2.jpg",0,0,1920,1080);
 
     while(1)
     {
@@ -699,7 +705,8 @@ void meniu1()
             y=mousey();
             if(x>=1800&& y<=125) exit(0);
             else if(x>=1800 && y>=140 && y<=245) muzica(windowS);
-            else if(x<=234 && y>=865 && y<=955) despre(windowS);
+            else if(x>=1452 && x<=1699 && y>=997) despre(windowS);
+            else if(x>=1698 && y>=997) ajutor(windowS);
             else if(x<=420 && y>=955) meniu2();
         }
     }
@@ -733,6 +740,23 @@ void muzica (int windowS)
     }
 }
 
+void ajutor(int windowS){
+    int windowA, x, y;
+    bool click=false;
+    windowA=initwindow(1035,650,"Ajutor");
+    readimagefile("ajutor.jpg",0,0,1035,650);
+    do{
+        if(ismouseclick(WM_LBUTTONDOWN)){
+            clearmouseclick(WM_LBUTTONDOWN);
+            x=mousex(); y=mousey();
+            if(x>=935 && y<=75) {
+                click=true;
+                closegraph(windowA);
+            }
+        }
+    }while(!click);
+    setcurrentwindow(windowS);
+}
 void despre (int windowS)
 {
     int windowD, x, y;
@@ -2052,7 +2076,12 @@ Real eval_postfix_Real (Real vector[], int lungime)
             if ( auxiliar.operatie == 1 ) stiva[varf_stiva].n = operand_stanga.n + operand_dreapta.n;
             else if ( auxiliar.operatie == 2 ) stiva[varf_stiva].n = operand_stanga.n - operand_dreapta.n;
             else if ( auxiliar.operatie == 3 ) stiva[varf_stiva].n = operand_stanga.n * operand_dreapta.n;
-            else if ( auxiliar.operatie == 4 ) stiva[varf_stiva].n = operand_stanga.n / operand_dreapta.n;
+            else if ( auxiliar.operatie == 4 )
+            {
+                stiva[varf_stiva].n = operand_stanga.n / operand_dreapta.n;
+                if(operand_dreapta.n==0)
+                eroare=1;
+            }
 
         }
     }
